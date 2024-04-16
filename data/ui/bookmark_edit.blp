@@ -1,0 +1,199 @@
+using Gtk 4.0;
+
+Image image1 {
+  visible: false;
+  icon-name: 'go-previous-symbolic';
+}
+
+Image image2 {
+  visible: false;
+  icon-name: 'user-trash-symbolic';
+}
+
+Grid widget {
+  visible: false;
+  width-request: 500;
+  height-request: 300;
+  margin-start: 5;
+  margin-end: 5;
+  margin-top: 5;
+  margin-bottom: 5;
+  row-spacing: 20;
+  column-spacing: 20;
+
+  Button back_button {
+    visible: false;
+    focusable: true;
+    receives-default: true;
+    halign: start;
+    valign: start;
+    clicked => $_on_back_clicked();
+
+    layout {
+      column: '0';
+      row: '0';
+    }
+  }
+
+  Frame {
+    visible: false;
+    vexpand: true;
+    child: 
+    Grid {
+      visible: false;
+      margin-start: 5;
+      margin-end: 5;
+      margin-bottom: 5;
+      column-spacing: 5;
+
+      ScrolledWindow scrolled {
+        visible: false;
+        focusable: true;
+        hexpand: true;
+        vexpand: true;
+        hscrollbar-policy: never;
+        child: 
+        Viewport {
+          visible: false;
+          valign: start;
+          child: 
+          FlowBox flowbox {
+            visible: false;
+            margin-start: 10;
+            margin-end: 10;
+            margin-top: 10;
+            margin-bottom: 10;
+            column-spacing: 10;
+            row-spacing: 10;
+            max-children-per-line: 100;
+            selection-mode: none;
+          }
+
+          ;
+        }
+
+        ;
+
+        layout {
+          column: '0';
+          row: '0';
+          column-span: '2';
+        }
+      }
+    }
+
+    ;
+
+    [label]
+    Entry new_tag_entry {
+      visible: false;
+      width-request: 300;
+      height-request: 32;
+      focusable: true;
+      tooltip-text: _('Add new tag');
+      primary-icon-name: 'bookmark-new-symbolic';
+      placeholder-text: _('Add new tag');
+      activate => $_on_new_tag_entry_activate();
+      icon-press => $_on_new_tag_entry_activate();
+
+      styles [
+        "tag",
+      ]
+    }
+
+    layout {
+      column: '1';
+      row: '1';
+    }
+  }
+
+  Grid bookmark_grid {
+    visible: false;
+    row-spacing: 10;
+    column-spacing: 10;
+
+    Label {
+      visible: false;
+      halign: start;
+      label: _('Title:');
+
+      layout {
+        column: '0';
+        row: '0';
+      }
+    }
+
+    Entry title_entry {
+      visible: false;
+      focusable: true;
+      hexpand: true;
+      changed => $_on_entry_changed();
+
+      layout {
+        column: '1';
+        row: '0';
+      }
+    }
+
+    Button {
+      visible: false;
+      width-request: 48;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('Remove bookmark');
+      halign: end;
+      clicked => $_on_del_clicked();
+
+      styles [
+        "destructive-action",
+      ]
+
+      layout {
+        column: '2';
+        row: '0';
+      }
+    }
+
+    Label {
+      visible: false;
+      halign: start;
+      label: _('Address:');
+
+      layout {
+        column: '0';
+        row: '1';
+      }
+    }
+
+    Entry uri_entry {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      hexpand: true;
+      changed => $_on_entry_changed();
+
+      layout {
+        column: '1';
+        row: '1';
+      }
+    }
+
+    CheckButton startup_button {
+      visible: false;
+      label: _('Load at startup');
+      focusable: true;
+      toggled => $_on_load_at_startup_toggled();
+
+      layout {
+        column: '0';
+        row: '2';
+        column-span: '3';
+      }
+    }
+
+    layout {
+      column: '1';
+      row: '0';
+    }
+  }
+}

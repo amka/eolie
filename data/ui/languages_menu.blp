@@ -1,0 +1,57 @@
+using Gtk 4.0;
+
+Grid languages {
+  visible: false;
+  margin-start: 5;
+  margin-end: 5;
+  margin-top: 5;
+  margin-bottom: 5;
+  column-spacing: 10;
+  map => $_on_map(listbox);
+
+  MenuButton {
+    label: _('Spell checking');
+  }
+
+  ScrolledWindow {
+    visible: false;
+    height-request: 300;
+    focusable: true;
+    child: 
+    Viewport {
+      visible: false;
+      child: 
+      ListBox listbox {
+        visible: false;
+        selection-mode: none;
+
+        styles [
+          "menu-listbox",
+        ]
+      }
+
+      ;
+    }
+
+    ;
+  }
+
+  Switch switch {
+    visible: false;
+    focusable: true;
+    tooltip-text: _('Enable spell checking');
+    halign: start;
+    margin-start: 2;
+    margin-end: 2;
+    margin-top: 2;
+    margin-bottom: 2;
+    state-set => $_on_state_set(listbox);
+  }
+
+  Image {
+    visible: false;
+    tooltip-text: _('Enable spell checking');
+    halign: end;
+    icon-name: 'tools-check-spelling-symbolic';
+  }
+}

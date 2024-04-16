@@ -1,0 +1,273 @@
+using Gtk 4.0;
+
+Image image1 {
+  visible: false;
+  icon-name: 'document-save-as-symbolic';
+}
+
+Image image2 {
+  visible: false;
+  icon-name: 'printer-symbolic';
+}
+
+Image image3 {
+  visible: false;
+  icon-name: 'gedit-symbolic';
+}
+
+Image image4 {
+  visible: false;
+  icon-name: 'zoom-out-symbolic';
+}
+
+Image image40 {
+  visible: false;
+  icon-name: 'view-fullscreen-symbolic';
+}
+
+Image image5 {
+  visible: false;
+  icon-name: 'zoom-in-symbolic';
+}
+
+Grid widget {
+  visible: false;
+  margin-start: 5;
+  margin-end: 5;
+  margin-top: 5;
+  margin-bottom: 5;
+  orientation: vertical;
+  row-spacing: 5;
+
+  Box {
+    visible: false;
+
+    Button save_button {
+      visible: false;
+      width-request: 48;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('Save page');
+      hexpand: true;
+      clicked => $_on_save_button_clicked();
+    }
+
+    Button print_button {
+      visible: false;
+      width-request: 48;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('Print page');
+      hexpand: true;
+      clicked => $_on_print_button_clicked();
+    }
+
+    ToggleButton fullscreen_button {
+      visible: false;
+      width-request: 48;
+      focusable: true;
+      receives-default: true;
+      hexpand: true;
+      toggled => $_on_fullscreen_button_toggled();
+    }
+
+    styles [
+      "linked",
+    ]
+
+    layout {
+      column: '0';
+      row: '0';
+    }
+  }
+
+  Box {
+    visible: false;
+
+    Button {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('Zoom out');
+      hexpand: true;
+      clicked => $_on_unzoom_button_clicked(default_zoom_button);
+    }
+
+    Button default_zoom_button {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('Default zoom level');
+      hexpand: true;
+      clicked => $_on_default_zoom_button_clicked();
+    }
+
+    Button {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('Zoom in');
+      hexpand: true;
+      clicked => $_on_zoom_button_clicked(default_zoom_button);
+    }
+
+    styles [
+      "linked",
+    ]
+
+    layout {
+      column: '0';
+      row: '1';
+    }
+  }
+
+  Grid {
+    visible: false;
+    column-spacing: 4;
+
+    Label {
+      visible: false;
+      label: _('Filtering');
+
+      styles [
+        "dim-label",
+      ]
+
+      layout {
+        column: '1';
+        row: '0';
+      }
+    }
+
+    Separator {
+      visible: false;
+      valign: center;
+      hexpand: true;
+
+      layout {
+        column: '0';
+        row: '0';
+      }
+    }
+
+    Separator {
+      visible: false;
+      valign: center;
+      hexpand: true;
+
+      layout {
+        column: '2';
+        row: '0';
+      }
+    }
+
+    layout {
+      column: '0';
+      row: '1';
+    }
+  }
+
+  $GtkModelButton spell-checking {
+    text: _('Spell checking');
+
+    layout {
+      column: '0';
+      row: '10';
+    }
+  }
+
+  $GtkModelButton block-ads {
+    text: _('Show ads');
+
+    layout {
+      column: '0';
+      row: '3';
+    }
+  }
+
+  $GtkModelButton block-popups {
+    text: _('Show popups');
+
+    layout {
+      column: '0';
+      row: '4';
+    }
+  }
+
+  $GtkModelButton block-images {
+    text: _('Show images');
+
+    layout {
+      column: '0';
+      row: '5';
+    }
+  }
+
+  $GtkModelButton block-medias {
+    text: _('Show multimedia');
+
+    layout {
+      column: '0';
+      row: '6';
+    }
+  }
+
+  Box {
+    visible: false;
+    spacing: 5;
+
+    Separator {
+      visible: false;
+      valign: center;
+      hexpand: true;
+    }
+
+    Label domain_label {
+      visible: false;
+      ellipsize: middle;
+      max-width-chars: 20;
+
+      styles [
+        "dim-label",
+      ]
+    }
+
+    Separator {
+      visible: false;
+      valign: center;
+      hexpand: true;
+    }
+
+    layout {
+      column: '0';
+      row: '2';
+    }
+  }
+
+  $GtkModelButton scripts {
+    text: _('Scripts');
+
+    layout {
+      column: '0';
+      row: '9';
+    }
+  }
+
+  $GtkModelButton audio_policy {
+    text: _('Allow audio');
+
+    layout {
+      column: '0';
+      row: '7';
+    }
+  }
+
+  $GtkModelButton night_mode {
+    text: _('Night mode');
+
+    layout {
+      column: '0';
+      row: '8';
+    }
+  }
+}

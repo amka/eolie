@@ -83,9 +83,9 @@ class ReadingContainer:
     def __on_decide_policy(self, webview, decision, decision_type):
         """
             Load link inside main view
-            @param webview as WebKit2.WebView
-            @param decision as WebKit2.NavigationPolicyDecision
-            @param decision_type as WebKit2.PolicyDecisionType
+            @param webview as WebKit.WebView
+            @param decision as WebKit.NavigationPolicyDecision
+            @param decision_type as WebKit.PolicyDecisionType
             @return bool
         """
         navigation_action = decision.get_navigation_action()

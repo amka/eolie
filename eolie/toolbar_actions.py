@@ -10,14 +10,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GLib
+from gi.repository import Gtk, GLib, Adw
 
 from eolie.define import App, LoadingType
 from eolie.utils import update_popover_internals
 from eolie.helper_gestures import GesturesHelper
 
 
-class ToolbarActions(Gtk.Bin):
+class ToolbarActions(Adw.Bin):
     """
         Actions toolbar
     """
@@ -28,7 +28,7 @@ class ToolbarActions(Gtk.Bin):
             @param window as Window
             @param fullscreen as bool
         """
-        Gtk.Bin.__init__(self)
+        super().__init__()
         self.__window = window
         self.__timeout_id = None
         builder = Gtk.Builder()

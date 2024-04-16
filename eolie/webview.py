@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import WebKit2, Gio, GLib
+from gi.repository import WebKit, Gio, GLib
 
 from urllib.parse import urlparse
 from time import time
@@ -30,7 +30,7 @@ from eolie.utils import emit_signal
 from eolie.logger import Logger
 
 
-class WebView(WebKit2.WebView):
+class WebView(WebKit.WebView):
     """
         WebKit view
     """
@@ -40,11 +40,11 @@ class WebView(WebKit2.WebView):
             New webview
             @param window as Window
         """
-        context = WebKit2.WebContext(
+        context = WebKit.WebContext(
             process_swap_on_cross_site_navigation_enabled=True)
         Context(context)
 
-        webview = WebKit2.WebView.new_with_context(context)
+        webview = WebKit.WebView.new_with_context(context)
         webview.__class__ = WebViewMeta
         webview.__init(None, window)
         return webview
@@ -54,9 +54,9 @@ class WebView(WebKit2.WebView):
             New ephemeral webview
             @param window as Window
         """
-        context = WebKit2.WebContext.new_ephemeral()
+        context = WebKit.WebContext.new_ephemeral()
         Context(context)
-        webview = WebKit2.WebView.new_with_context(context)
+        webview = WebKit.WebView.new_with_context(context)
         webview.__class__ = WebViewMeta
         webview.__init(None, window)
         return webview
@@ -68,7 +68,7 @@ class WebView(WebKit2.WebView):
             @param window as Window
             @return WebView
         """
-        webview = WebKit2.WebView.new_with_related_view(related)
+        webview = WebKit.WebView.new_with_related_view(related)
         webview.__class__ = WebViewMeta
         webview.__init(related, window)
         return webview
@@ -90,7 +90,7 @@ class WebView(WebKit2.WebView):
             Reload page, destroy night mode cache
         """
         self.remove_night_mode_cache()
-        WebKit2.WebView.reload_bypass_cache(self)
+        WebKit.WebView.reload_bypass_cache(self)
 
     def update_zoom_level(self):
         """
@@ -115,7 +115,7 @@ class WebView(WebKit2.WebView):
         """
         value = App().websettings.get("audio", self.uri)
         if value:
-            return WebKit2.WebView.is_playing_audio(self)
+            return WebKit.WebView.is_playing_audio(self)
         else:
             return False
 
@@ -134,7 +134,7 @@ class WebView(WebKit2.WebView):
         """
             Show print dialog for current page
         """
-        p = WebKit2.PrintOperation.new(self)
+        p = WebKit.PrintOperation.new(self)
         p.run_dialog()
 
     def zoom_in(self):
@@ -318,7 +318,7 @@ class WebView(WebKit2.WebView):
             Stop loading webview
         """
         self._loading_state = LoadingState.STOPPED
-        WebKit2.WebView.stop_loading(self)
+        WebKit.WebView.stop_loading(self)
 
     @property
     def loading_state(self):
@@ -450,7 +450,7 @@ class WebView(WebKit2.WebView):
                                           "font-serif").get_string())
             settings.set_property("auto-load-images", True)
             # settings.set_hardware_acceleration_policy(
-            #    WebKit2.HardwareAccelerationPolicy.NEVER)
+            #    WebKit.HardwareAccelerationPolicy.NEVER)
             settings.set_property("enable-site-specific-quirks", True)
             settings.set_property("allow-universal-access-from-file-urls",
                                   False)
@@ -479,7 +479,7 @@ class WebView(WebKit2.WebView):
             settings.set_property("javascript-can-open-windows-automatically",
                                   True)
             settings.set_property("media-playback-allows-inline", True)
-            if WebKit2.get_minor_version() > 22:
+            if WebKit.get_minor_version() > 22:
                 settings.set_property(
                     "enable-back-forward-navigation-gestures", True)
         self.connect("create", self.__on_create)
@@ -491,7 +491,7 @@ class WebView(WebKit2.WebView):
     def __set_system_fonts(self, settings):
         """
             Set system font
-            @param settings as WebKit2.Settings
+            @param settings as WebKit.Settings
             @param system as Gio.Settings("org.gnome.desktop.interface")
         """
         system = Gio.Settings.new("org.gnome.desktop.interface")
@@ -509,7 +509,7 @@ class WebView(WebKit2.WebView):
         """
             Create a new view for action
             @param related as WebView
-            @param navigation_action as WebKit2.NavigationAction
+            @param navigation_action as WebKit.NavigationAction
         """
         webview = WebView.new_with_related_view(related, self.window)
         webview.set_atime(related.atime - 1)
@@ -531,7 +531,7 @@ class WebView(WebKit2.WebView):
             Add a new webview with related
             @param webview as WebView
             @param related as WebView
-            @param navigation_action as WebKit2.NavigationAction
+            @param navigation_action as WebKit.NavigationAction
             @param elapsed as float
         """
         properties = webview.get_window_properties()
@@ -588,7 +588,7 @@ class WebViewMeta(WebViewNavigation, WebView, WebViewErrors,
         """
             Update internals
             @param webview as WebView
-            @param event as WebKit2.LoadEvent
+            @param event as WebKit.LoadEvent
         """
         WebViewCredentials._on_load_changed(self, webview, event)
         WebViewHelpers._on_load_changed(self, webview, event)

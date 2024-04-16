@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GLib
+from gi.repository import Gtk, GLib, Adw
 
 from locale import strcoll
 from time import time
@@ -113,7 +113,7 @@ class TagWidget(Gtk.FlowBoxChild):
                                      Gtk.IconSize.BUTTON)
 
 
-class BookmarkEditWidget(Gtk.Bin):
+class BookmarkEditWidget(Adw.Bin):
     """
         Widget allowing to edit a bookmark
     """
@@ -124,7 +124,7 @@ class BookmarkEditWidget(Gtk.Bin):
             @param bookmark id as int
             @param enable back button as bool
         """
-        Gtk.Bin.__init__(self)
+        super().__init__()
         self.__bookmark_id = bookmark_id
         builder = Gtk.Builder()
         builder.add_from_resource("/org/gnome/Eolie/BookmarkEdit.ui")

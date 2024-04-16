@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GLib, WebKit2, GObject, Pango
+from gi.repository import Gtk, GLib, WebKit, GObject, Pango, Adw
 
 from eolie.define import MARGIN_SMALL
 from eolie.utils import emit_signal
@@ -25,7 +25,7 @@ class Row(Gtk.ListBoxRow):
     def __init__(self, item):
         """
             Init Row
-            @param item as WebKit2.WebsiteData
+            @param item as WebKit.WebsiteData
         """
         Gtk.ListBoxRow.__init__(self)
         self.__item = item
@@ -40,12 +40,12 @@ class Row(Gtk.ListBoxRow):
     def item(self):
         """
             Get title
-            @return WebKit2.WebsiteData
+            @return WebKit.WebsiteData
         """
         return self.__item
 
 
-class ClearDataDialog(Gtk.Bin):
+class ClearDataDialog(Adw.Bin):
     """
         A clear data dialog
         THANKS TO EPIPHANY DEVS FOR UI FILE!
@@ -59,7 +59,7 @@ class ClearDataDialog(Gtk.Bin):
         """
             Init widget
         """
-        Gtk.Bin.__init__(self)
+        super().__init__()
         self.__search = ""
         builder = Gtk.Builder()
         builder.add_from_resource("/org/gnome/Eolie/DialogClearData.ui")
@@ -95,11 +95,11 @@ class ClearDataDialog(Gtk.Bin):
             Clear data
             @param button as Gtk.Button
         """
-        context = WebKit2.WebContext.get_default()
+        context = WebKit.WebContext.get_default()
         data_manager = context.get_property("website-data-manager")
         rows = self.__listbox.get_selected_rows()
         items = [row.item for row in rows]
-        data_manager.remove(WebKit2.WebsiteDataTypes.ALL, items, None)
+        data_manager.remove(WebKit.WebsiteDataTypes.ALL, items, None)
         for row in rows:
             row.destroy()
 
@@ -143,16 +143,16 @@ class ClearDataDialog(Gtk.Bin):
         """
             Populate treeview
         """
-        context = WebKit2.WebContext.get_default()
+        context = WebKit.WebContext.get_default()
         data_manager = context.get_property("website-data-manager")
-        data_manager.fetch(WebKit2.WebsiteDataTypes.ALL,
+        data_manager.fetch(WebKit.WebsiteDataTypes.ALL,
                            None,
                            self.__on_data_manager_fetch)
 
     def __add_items(self, items):
         """
             Add items to model
-            @param items as [WebKit2.WebsiteData]
+            @param items as [WebKit.WebsiteData]
         """
         if items:
             item = items.pop(0)
@@ -164,7 +164,7 @@ class ClearDataDialog(Gtk.Bin):
     def __on_data_manager_fetch(self, data_manager, result):
         """
             Get fetch result
-            @param data_manager as WebKit2.WebsiteDataManager
+            @param data_manager as WebKit.WebsiteDataManager
             @param result as Gio.AsyncResult
         """
         try:

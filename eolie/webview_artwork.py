@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import GLib, WebKit2, Gio
+from gi.repository import GLib, WebKit, Gio
 
 from urllib.parse import urlparse
 
@@ -62,9 +62,9 @@ class WebViewArtwork:
         """
             Update sidebar/urlbar
             @param webview as WebView
-            @param event as WebKit2.LoadEvent
+            @param event as WebKit.LoadEvent
         """
-        if event == WebKit2.LoadEvent.STARTED:
+        if event == WebKit.LoadEvent.STARTED:
             self._loading = True
             self.__is_snapshot_valid = False
             self.__cancellable.cancel()
@@ -72,7 +72,7 @@ class WebViewArtwork:
             if self.__snapshot_id is not None:
                 GLib.source_remove(self.__snapshot_id)
                 self.__snapshot_id = None
-        elif event == WebKit2.LoadEvent.FINISHED:
+        elif event == WebKit.LoadEvent.FINISHED:
             if self.__snapshot_id is not None:
                 GLib.source_remove(self.__snapshot_id)
                 self.__snapshot_id = None
@@ -112,8 +112,8 @@ class WebViewArtwork:
             if uri is not None and App().bookmarks.get_id(uri) is not None:
                 save = True
                 break
-        self.get_snapshot(WebKit2.SnapshotRegion.VISIBLE,
-                          WebKit2.SnapshotOptions.NONE,
+        self.get_snapshot(WebKit.SnapshotRegion.VISIBLE,
+                          WebKit.SnapshotOptions.NONE,
                           self.__cancellable,
                           get_snapshot,
                           self.__on_snapshot,
@@ -122,7 +122,7 @@ class WebViewArtwork:
     def __set_favicon_from_surface(self, surface, uri):
         """
             Set favicon for surface
-            @param favicon_db as WebKit2.FaviconDatabase
+            @param favicon_db as WebKit.FaviconDatabase
             @param result as Gio.AsyncResult
             @param uri as str
         """
@@ -153,7 +153,7 @@ class WebViewArtwork:
     def __on_uri_changed(self, webview, param):
         """
             Handle JS updates
-            @param webview as WebKit2.WebView
+            @param webview as WebKit.WebView
             @param param as GObject.ParamSpec
         """
         if webview.get_uri() is not None and\
@@ -193,8 +193,8 @@ class WebViewArtwork:
         """
         def update_snapshot():
             self.__scroll_event_id = None
-            self.get_snapshot(WebKit2.SnapshotRegion.VISIBLE,
-                              WebKit2.SnapshotOptions.NONE,
+            self.get_snapshot(WebKit.SnapshotRegion.VISIBLE,
+                              WebKit.SnapshotOptions.NONE,
                               self.__cancellable,
                               get_snapshot,
                               self.__on_snapshot,

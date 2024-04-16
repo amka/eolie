@@ -1,0 +1,48 @@
+using Gtk 4.0;
+
+Grid widget {
+  margin-start: 10;
+  margin-end: 10;
+  margin-top: 5;
+  margin-bottom: 5;
+  row-spacing: 10;
+  column-spacing: 10;
+
+  Label label {
+    halign: start;
+    wrap: true;
+    max-width-chars: 60;
+  }
+
+  Button ok_button {
+    label: _('OK');
+    focusable: true;
+    receives-default: true;
+    clicked => $_on_ok_button_clicked();
+  }
+
+  Image image {
+    icon-name: 'mark-location-symbolic';
+
+    styles [
+      "selected",
+    ]
+  }
+
+  Button cancel_button {
+    label: _('Cancel');
+    focusable: true;
+    receives-default: true;
+    clicked => $_on_cancel_button_clicked();
+  }
+
+  Label {
+    halign: start;
+    label: _('Forever');
+  }
+
+  Switch switch {
+    focusable: true;
+    halign: start;
+  }
+}

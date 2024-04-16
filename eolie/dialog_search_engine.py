@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GLib, GObject, Pango
+from gi.repository import Gtk, GLib, GObject, Pango, Adw
 
 from gettext import gettext as _
 from urllib.parse import urlparse
@@ -90,7 +90,7 @@ class Row(Gtk.ListBoxRow):
         return self.__item
 
 
-class SearchEngineDialog(Gtk.Bin):
+class SearchEngineDialog(Adw.Bin):
     """
         A search engine dialog
         THANKS TO EPIPHANY DEVS FOR UI FILE!
@@ -103,7 +103,7 @@ class SearchEngineDialog(Gtk.Bin):
         """
             Init widget
         """
-        Gtk.Bin.__init__(self)
+        super().__init__()
         builder = Gtk.Builder()
         builder.add_from_resource("/org/gnome/Eolie/DialogSearchEngine.ui")
         self.__edit_box = builder.get_object("edit_box")

@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gio, GObject, GLib, WebKit2
+from gi.repository import Gio, GObject, GLib, WebKit
 
 import json
 
@@ -46,7 +46,7 @@ class ContentBlocker(GObject.Object):
             self.__exceptions = ContentBlockerExceptions(name)
             self._cancellable = Gio.Cancellable.new()
             self._task_helper = TaskHelper()
-            self.__store = WebKit2.UserContentFilterStore.new(self._DB_PATH)
+            self.__store = WebKit.UserContentFilterStore.new(self._DB_PATH)
             if not GLib.file_test(self._JSON_PATH, GLib.FileTest.IS_DIR):
                 GLib.mkdir_with_parents(self._JSON_PATH, 0o0750)
             if self.enabled:
@@ -106,7 +106,7 @@ class ContentBlocker(GObject.Object):
     def filter(self):
         """
             Get filters
-            return WebKit2.UserContentFilter
+            return WebKit.UserContentFilter
         """
         return self.__filter
 
@@ -150,7 +150,7 @@ class ContentBlocker(GObject.Object):
     def __on_store_load(self, store, result):
         """
             Notify for new filter
-            @param store as WebKit2.UserContentFilterStore
+            @param store as WebKit.UserContentFilterStore
             @param result as Gio.AsyncResult
             @param encoded as str
         """
@@ -164,7 +164,7 @@ class ContentBlocker(GObject.Object):
     def __on_store_save(self, store, result):
         """
             Notify for new filter
-            @param store as WebKit2.UserContentFilterStore
+            @param store as WebKit.UserContentFilterStore
             @param result as Gio.AsyncResult
         """
         try:

@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GLib, WebKit2
+from gi.repository import Gtk, GLib, WebKit
 
 from gettext import gettext as _
 
@@ -24,7 +24,7 @@ class JavaScriptPopover(Gtk.Popover):
     def __init__(self, dialog, window):
         """
             Init popover
-            @param dialog as WebKit2.ScriptDialog
+            @param dialog as WebKit.ScriptDialog
             @param window as window
         """
         Gtk.Popover.__init__(self)
@@ -42,20 +42,20 @@ class JavaScriptPopover(Gtk.Popover):
         cancel_button = builder.get_object("cancel_button")
         dialog_type = dialog.get_dialog_type()
         # Set icon
-        if dialog_type == WebKit2.ScriptDialogType.ALERT:
+        if dialog_type == WebKit.ScriptDialogType.ALERT:
             image.set_from_icon_name("dialog-warning-symbolic",
                                      Gtk.IconSize.DIALOG)
-        elif dialog_type in [WebKit2.ScriptDialogType.CONFIRM,
-                             WebKit2.ScriptDialogType.PROMPT,
-                             WebKit2.ScriptDialogType.BEFORE_UNLOAD_CONFIRM]:
+        elif dialog_type in [WebKit.ScriptDialogType.CONFIRM,
+                             WebKit.ScriptDialogType.PROMPT,
+                             WebKit.ScriptDialogType.BEFORE_UNLOAD_CONFIRM]:
             image.set_from_icon_name("dialog-question-symbolic",
                                      Gtk.IconSize.DIALOG)
             ok_button.show()
             cancel_button.show()
-        if dialog_type == WebKit2.ScriptDialogType.PROMPT:
+        if dialog_type == WebKit.ScriptDialogType.PROMPT:
             self.__entry.set_text(dialog.prompt_get_default_text())
             self.__entry.show()
-        if dialog_type == WebKit2.ScriptDialogType.BEFORE_UNLOAD_CONFIRM:
+        if dialog_type == WebKit.ScriptDialogType.BEFORE_UNLOAD_CONFIRM:
             ok_button.set_label(_("Continue"))
             cancel_button.set_label(_("Cancel"))
         label.set_text(dialog.get_message())

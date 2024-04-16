@@ -1,0 +1,68 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.HeaderBar headerbar {
+  [title-widget]
+  Label {
+    visible: false;
+    label: _('Notifications');
+  }
+
+  Button modify_button {
+    visible: false;
+    label: _('Modify');
+    valign: center;
+    use-underline: true;
+
+    styles [
+      "text-button",
+      "suggested-action",
+    ]
+  }
+}
+
+Dialog dialog {
+  width-request: 500;
+  response => $_on_dialog_response();
+
+  [internal-child content_area]
+  Box {
+    visible: false;
+
+    Box {
+      visible: false;
+      orientation: vertical;
+      spacing: 12;
+
+      Entry entry {
+        visible: false;
+        focusable: true;
+      }
+
+      Frame {
+        visible: false;
+        child: 
+        TreeView view {
+          visible: false;
+          focusable: true;
+          vexpand: true;
+          headers-visible: false;
+          enable-search: false;
+          show-expanders: false;
+          activate-on-single-click: true;
+
+          [internal-child selection]
+          TreeSelection selection {
+            changed => $_on_selection_changed();
+          }
+        }
+
+        ;
+      }
+    }
+  }
+
+  [internal-child action_area]
+  $GtkButtonBox {
+  }
+}

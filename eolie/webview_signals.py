@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, Gdk, Gio, WebKit2, GObject
+from gi.repository import Gtk, Gdk, Gio, WebKit, GObject
 
 from gettext import gettext as _
 from urllib.parse import urlparse
@@ -39,7 +39,7 @@ class WebViewSignals(WebViewMenuSignals, WebViewJsSignals):
 
     for signal in gsignals:
         args = gsignals[signal]
-        GObject.signal_new(signal, WebKit2.WebView,
+        GObject.signal_new(signal, WebKit.WebView,
                            args[0], args[1], args[2])
 
     def __init__(self):
@@ -125,7 +125,7 @@ class WebViewSignals(WebViewMenuSignals, WebViewJsSignals):
         """
             Run own file chooser
             @param webview as WebView
-            @param request as WebKit2.FileChooserRequest
+            @param request as WebKit.FileChooserRequest
         """
         dialog = Gtk.FileChooserNative.new(_("Select files to upload"),
                                            self.window,
@@ -173,7 +173,7 @@ class WebViewSignals(WebViewMenuSignals, WebViewJsSignals):
     def __on_uri_changed(self, webview, param):
         """
             Handle JS updates
-            @param webview as WebKit2.WebView
+            @param webview as WebKit.WebView
             @param param as GObject.ParamSpec
         """
         uri = webview.get_property(param.name).rstrip("/")
@@ -185,7 +185,7 @@ class WebViewSignals(WebViewMenuSignals, WebViewJsSignals):
     def __on_title_changed(self, webview, param):
         """
             We launch Readability.js at page loading finished.
-            @param webview as WebKit2.WebView
+            @param webview as WebKit.WebView
             @param param as GObject.ParamSpec
         """
         title = webview.get_property(param.name)

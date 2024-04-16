@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GLib, WebKit2, Pango
+from gi.repository import Gtk, GLib, WebKit, Pango, Adw
 
 from gettext import gettext as _
 
@@ -32,7 +32,7 @@ class ProgressBar(Gtk.ProgressBar):
         return (24, 24)
 
 
-class ToolbarEnd(Gtk.Bin):
+class ToolbarEnd(Adw.Bin):
     """
         Toolbar end
     """
@@ -43,7 +43,7 @@ class ToolbarEnd(Gtk.Bin):
             @param window as Window
             @param fullscreen as bool
         """
-        Gtk.Bin.__init__(self)
+        super().__init__()
         self.__window = window
         self.__timeout_id = None
         self.__image_change_state_id = None
@@ -83,7 +83,7 @@ class ToolbarEnd(Gtk.Bin):
     def show_download(self, download):
         """
             Notify user about download
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
         """
         header = Gtk.Label.new()
         header.set_markup("<b>" + _("Downloading:") + "</b>")
@@ -245,7 +245,7 @@ class ToolbarEnd(Gtk.Bin):
         if response_id == Gtk.ResponseType.ACCEPT:
             self.__window.container.webview.save_to_file(
                 dialog.get_file(),
-                WebKit2.SaveMode.MHTML,
+                WebKit.SaveMode.MHTML,
                 None,
                 None)
 

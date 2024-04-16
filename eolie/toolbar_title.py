@@ -18,7 +18,7 @@ from eolie.define import App
 from eolie.widget_uri_entry import UriEntry
 
 
-class ToolbarTitle(Gtk.EventBox):
+class ToolbarTitle(Gtk.Box):
     """
         Title toolbar
     """
@@ -28,7 +28,7 @@ class ToolbarTitle(Gtk.EventBox):
             Init toolbar
             @param window as Window
         """
-        Gtk.EventBox.__init__(self)
+        super().__init__()
         self.__window = window
         self.__width = -1
         self.__input_warning_shown = False
@@ -47,7 +47,7 @@ class ToolbarTitle(Gtk.EventBox):
     def show_javascript(self, dialog):
         """
             Show a popover with javascript message
-            @param dialog as WebKit2.ScriptDialog
+            @param dialog as WebKit.ScriptDialog
         """
         if dialog.get_message():
             from eolie.popover_javascript import JavaScriptPopover
@@ -59,7 +59,7 @@ class ToolbarTitle(Gtk.EventBox):
         """
             Show a popover allowing geolocation
             @param uri as str
-            @param request as WebKit2.PermissionRequest
+            @param request as WebKit.PermissionRequest
         """
         if App().websettings.get("geolocation", uri):
             request.allow()

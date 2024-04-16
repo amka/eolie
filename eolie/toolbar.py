@@ -10,15 +10,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Handy
+from gi.repository import Adw, Gtk
 
-from eolie.toolbar_actions import ToolbarActions
-from eolie.toolbar_title import ToolbarTitle
-from eolie.toolbar_end import ToolbarEnd
 from eolie.helper_gestures import GesturesHelper
+from eolie.toolbar_actions import ToolbarActions
+from eolie.toolbar_end import ToolbarEnd
+from eolie.toolbar_title import ToolbarTitle
 
 
-class Toolbar(Handy.HeaderBar):
+class Toolbar(Gtk.Box):
+    __gtype_name_ = 'Toolbar'
     """
         Eolie toolbar
     """
@@ -29,7 +30,7 @@ class Toolbar(Handy.HeaderBar):
             @param window as Window
             @param fullscreen as bool
         """
-        Handy.HeaderBar.__init__(self)
+        super().__init__()
         self.__window = window
         self.set_title("Eolie")
         self.__toolbar_actions = ToolbarActions(window, fullscreen)
@@ -77,9 +78,9 @@ class Toolbar(Handy.HeaderBar):
         """
         return self.__toolbar_actions
 
-#######################
-# PRIVATE             #
-#######################
+    #######################
+    # PRIVATE             #
+    #######################
     def __on_press(self, x, y, event):
         """
             Hide popovers

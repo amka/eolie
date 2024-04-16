@@ -38,7 +38,7 @@ class DownloadManager(GObject.GObject):
     def add(self, download, filename=None):
         """
             Add a download
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
             @param filename as str/None
         """
         if download not in self.__downloads:
@@ -51,7 +51,7 @@ class DownloadManager(GObject.GObject):
     def remove(self, download):
         """
             Remove download
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
         """
         if download in self.__downloads:
             self.__downloads.remove(download)
@@ -61,14 +61,14 @@ class DownloadManager(GObject.GObject):
     def get(self):
         """
             Get running downloads
-            @return [WebKit2.Download]
+            @return [WebKit.Download]
         """
         return self.__downloads
 
     def get_finished(self):
         """
             Get finished download
-            @return [WebKit2.Download]
+            @return [WebKit.Download]
         """
         return self.__finished
 
@@ -95,7 +95,7 @@ class DownloadManager(GObject.GObject):
     def __on_decide_destination(self, download, filename, wanted_filename):
         """
             Modify destination if needed
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
             @param filename as str
             @param wanted_filename as str
         """
@@ -150,7 +150,7 @@ class DownloadManager(GObject.GObject):
 
     def __on_finished(self, download):
         """
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
         """
         self.remove(download)
         self.__finished.append(download)
@@ -163,7 +163,7 @@ class DownloadManager(GObject.GObject):
 
     def __on_failed(self, download, error):
         """
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
             @param error as GLib.Error
         """
         self.remove(download)

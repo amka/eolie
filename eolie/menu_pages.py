@@ -170,7 +170,7 @@ class PagesMenu(Gio.Menu):
             Add to playlists
             @param Gio.SimpleAction
             @param GVariant
-            @param data as (str, WebKit2.WebViewSessionState)
+            @param data as (str, WebKit.WebViewSessionState)
         """
         App().active_window.container.add_webview_for_uri(
                                                   uri,

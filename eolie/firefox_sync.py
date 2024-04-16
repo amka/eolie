@@ -40,7 +40,7 @@ class SyncWorker(GObject.Object):
         "syncing": (GObject.SignalFlags.RUN_FIRST, None, (str,))
     }
 
-    def check_modules():
+    def check_modules(self):
         """
             True if deps are installed
             @return bool

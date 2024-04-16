@@ -1,0 +1,199 @@
+using Gtk 4.0;
+using Adw 1;
+
+Image image1 {
+  visible: false;
+  icon-name: 'go-previous-symbolic';
+}
+
+Grid widget {
+  visible: false;
+  row-spacing: 5;
+  column-spacing: 5;
+
+  Box {
+    visible: false;
+    margin-start: 5;
+    margin-bottom: 5;
+    hexpand: true;
+    vexpand: true;
+    orientation: vertical;
+    spacing: 2;
+
+    ScrolledWindow {
+      visible: false;
+      focusable: true;
+      hscrollbar-policy: never;
+      child: 
+      Viewport {
+        visible: false;
+        child: 
+        ListBox list_box {
+          visible: false;
+          row-selected => $_on_row_selected();
+        }
+
+        ;
+      }
+
+      ;
+    }
+
+    Box {
+      visible: false;
+
+      Button add_button {
+        visible: false;
+        focusable: true;
+        receives-default: true;
+        clicked => $_on_add_button_clicked();
+
+        Image {
+          visible: false;
+          icon-name: 'list-add-symbolic';
+        }
+      }
+
+      Button remove_button {
+        visible: false;
+        sensitive: false;
+        focusable: true;
+        receives-default: true;
+        clicked => $_on_remove_button_clicked();
+
+        Image {
+          visible: false;
+          icon-name: 'list-remove-symbolic';
+        }
+      }
+
+      styles [
+        "linked",
+      ]
+    }
+  }
+
+  Box edit_box {
+    visible: false;
+    sensitive: false;
+    hexpand: true;
+    orientation: vertical;
+    spacing: 12;
+
+    Grid {
+      visible: false;
+      halign: center;
+      row-spacing: 6;
+      column-spacing: 12;
+
+      Label {
+        visible: false;
+        halign: start;
+        label: _('Name:');
+        justify: right;
+      }
+
+      Label {
+        visible: false;
+        halign: start;
+        label: _('Address:');
+        justify: right;
+      }
+
+      Entry name_entry {
+        visible: false;
+        focusable: true;
+        width-chars: 30;
+        changed => $_on_name_entry_changed();
+      }
+
+      Entry uri_entry {
+        visible: false;
+        focusable: true;
+        width-chars: 30;
+        changed => $_on_uri_entry_changed();
+      }
+
+      Label {
+        visible: false;
+        halign: start;
+        label: _('Default:');
+        justify: right;
+      }
+
+      Switch default_switch {
+        visible: false;
+        focusable: true;
+        halign: start;
+        state-set => $_on_default_switch_state_set();
+      }
+
+      Label {
+        visible: false;
+        halign: start;
+        label: _('Bang:');
+        justify: right;
+        width-chars: 2;
+      }
+
+      Entry bang_entry {
+        visible: false;
+        focusable: true;
+        tooltip-text: _('If bang is g, use g: in search bar to\n                                    search using this engine\n                                ');
+        max-length: 1;
+        width-chars: 2;
+        max-width-chars: 1;
+        changed => $_on_bang_entry_changed();
+      }
+
+      Label {
+        visible: false;
+        halign: start;
+        label: _('Search:');
+      }
+
+      Entry search_entry {
+        visible: false;
+        focusable: true;
+        width-chars: 30;
+        changed => $_on_search_entry_changed();
+      }
+    }
+
+    Box {
+      visible: false;
+
+      Image {
+        visible: false;
+        margin-top: 6;
+        margin-end: 6;
+        margin-start: 6;
+        margin-bottom: 6;
+        icon-name: 'dialog-information-symbolic';
+      }
+
+      Label {
+        visible: false;
+        valign: end;
+        label: _('To determine the search address, perform a\n                                    search using the search engine that you want to add and check the resulting address.\n                                    Remove the search term from the resulting address and replace it with %s.\n                                ');
+        wrap: true;
+        max-width-chars: 40;
+      }
+    }
+  }
+
+  Adw.HeaderBar {
+    [title-widget]
+    Label {
+      visible: false;
+      label: _('Search engines');
+    }
+
+    Button {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      clicked => $_on_back_clicked();
+    }
+  }
+}

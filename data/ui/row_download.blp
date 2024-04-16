@@ -1,0 +1,60 @@
+using Gtk 4.0;
+
+Image button_image {
+  visible: true;
+  icon-name: 'window-close-symbolic';
+  icon-size: normal;
+}
+
+Grid row {
+  visible: true;
+  margin-start: 5;
+  margin-end: 5;
+  margin-top: 5;
+  margin-bottom: 5;
+  row-spacing: 5;
+  column-spacing: 5;
+
+  Label label {
+    visible: true;
+    halign: start;
+    hexpand: true;
+    ellipsize: end;
+  }
+
+  ProgressBar progress {
+    visible: true;
+  }
+
+  Button button {
+    can-focus: true;
+    receives-default: true;
+    tooltip-text: _('Cancel download');
+    halign: center;
+    valign: center;
+    clicked => $_on_button_clicked();
+
+    styles [
+      "rounded-button",
+    ]
+  }
+
+  Label sublabel {
+    visible: true;
+    halign: start;
+    hexpand: true;
+    ellipsize: end;
+
+    styles [
+      "dim-label",
+    ]
+  }
+
+  Image preview {
+    visible: true;
+  }
+
+  styles [
+    "downloadrow",
+  ]
+}

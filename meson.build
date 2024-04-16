@@ -1,6 +1,6 @@
 project('eolie', 'c',
   version: '0.9.101',
-  meson_version: '>= 0.46.0',
+  meson_version: '>= 0.65.0',
 )
 
 revision = run_command('bin/revision.sh').stdout().strip()
@@ -15,23 +15,22 @@ else
 endif
 
 i18n = import('i18n')
-py_mod = import('python')
 project_id = 'org.gnome.Eolie'
 
 message('Looking for dependencies')
-py_installation = py_mod.find_installation('python3')
-if not py_installation.found()
-    error('No valid python3 binary found')
-else
-    message('Found python3 binary')
-endif
-dependency('glib-2.0')
-dependency('gobject-introspection-1.0', version: '>=1.35.9')
-dependency('gtk+-3.0', version :'>=3.20')
+pymod = import('python')
+python = pymod.find_installation()
+
+dependency('glib-2.0', version: '>= 2.70')
+dependency('gio-2.0', version: '>= 2.70')
+dependency('gtk4', version: '>= 4.12.0')
+dependency('libadwaita-1', version: '>=1.4.0')
+dependency('webkitgtk-6.0', version: '>= 2.42.0')
+
 
 env = environment()
 
-python_dir = join_paths(get_option('prefix'), py_installation.get_install_dir())
+python_dir = join_paths(get_option('prefix'), python.get_install_dir())
 LIBEXEC_DIR = join_paths(get_option('prefix'), get_option('libexecdir'))
 EXTENSION_DIR = join_paths(get_option('prefix'), get_option('libdir'), meson.project_name())
 DATA_DIR = join_paths(get_option('prefix'), get_option('datadir'), meson.project_name())

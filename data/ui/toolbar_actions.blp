@@ -1,0 +1,138 @@
+using Gtk 4.0;
+
+Image image1 {
+  visible: false;
+  icon-name: 'go-previous-symbolic';
+}
+
+Image image2 {
+  visible: false;
+  icon-name: 'go-next-symbolic';
+}
+
+Image image3 {
+  visible: false;
+  icon-name: 'document-new-symbolic';
+}
+
+Image image5 {
+  visible: false;
+  icon-name: 'open-menu-symbolic';
+
+  styles [
+    "no-padding",
+  ]
+}
+
+Image image7 {
+  visible: false;
+  icon-name: 'user-trash-symbolic';
+}
+
+Box actions {
+  visible: false;
+  valign: center;
+  spacing: 15;
+
+  Box linked {
+    visible: false;
+    margin-end: 10;
+
+    Button back_button {
+      visible: false;
+      width-request: 42;
+      sensitive: false;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('Backward');
+      valign: center;
+    }
+
+    Button forward_button {
+      visible: false;
+      width-request: 42;
+      sensitive: false;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('Forward');
+      valign: center;
+    }
+
+    styles [
+      "linked",
+    ]
+  }
+
+  Box {
+    visible: false;
+
+    Button new_button {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('New page');
+      clicked => $_on_new_button_clicked();
+    }
+
+    ToggleButton view_button {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('View all pages');
+      toggled => $_on_view_button_toggled();
+
+      Grid {
+        visible: false;
+        column-spacing: 5;
+        row-homogeneous: true;
+
+        Image image6 {
+          visible: false;
+          icon-name: 'view-paged-symbolic';
+
+          layout {
+            column: '0';
+            row: '0';
+          }
+        }
+
+        Label count {
+          visible: false;
+          halign: end;
+          valign: end;
+          label: '0';
+
+          styles [
+            "dim-label",
+            "eolie-count-label",
+            "font-monospace",
+          ]
+
+          layout {
+            column: '1';
+            row: '0';
+          }
+        }
+      }
+    }
+
+    Button close_button {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      tooltip-text: _('Close page');
+      clicked => $_on_close_button_clicked();
+    }
+
+    ToggleButton application_button {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      toggled => $_on_application_button_toggled();
+    }
+
+    styles [
+      "linked",
+    ]
+  }
+}

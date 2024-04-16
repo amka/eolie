@@ -27,7 +27,7 @@ class GeolocationPopover(Gtk.Popover):
         """
             Init popover
             @param uri as str
-            @param request as WebKit2.PermissionRequest
+            @param request as WebKit.PermissionRequest
             @param window as window
         """
         Gtk.Popover.__init__(self)

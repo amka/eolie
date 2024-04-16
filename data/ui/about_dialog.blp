@@ -1,0 +1,66 @@
+using Gtk 4.0;
+
+AboutDialog about_dialog {
+  modal: true;
+  destroy-with-parent: true;
+  program-name: 'Eolie';
+  version: '@REVISION@';
+  copyright: 'Copyright © 2016-2020 Cédric Bellegarde';
+  comments: _('A web browser for GNOME.');
+  website: '@PACKAGE_URL@';
+  website-label: _('Visit Eolie website');
+
+  /* Translators: Replace me with your names */
+  /* Translators: Replace me with your names */
+
+  translator-credits: C_('Translation credits here, put your name here!', 'Cédric Bellegarde <cedric.bellegarde@adishatz.org>\n        ');
+  logo-icon-name: 'org.gnome.Eolie';
+  license-type: gpl_3_0;
+
+  [internal-child vbox]
+  Box aboutdialog-vbox1 {
+    visible: false;
+    halign: center;
+    orientation: vertical;
+    spacing: 10;
+
+    [internal-child action_area]
+    $GtkButtonBox aboutdialog-action_area1 {
+    }
+
+    Grid grid1 {
+      visible: false;
+      halign: center;
+      column-spacing: 5;
+
+      Label donation {
+        visible: false;
+        label: _('Donations:');
+      }
+
+      LinkButton liberapay {
+        visible: false;
+        label: _('Liberapay');
+        focusable: true;
+        receives-default: true;
+        uri: 'https://liberapay.com/cedric.bellegarde';
+      }
+
+      LinkButton patreon {
+        visible: false;
+        label: _('Patreon');
+        focusable: true;
+        receives-default: true;
+        uri: 'https://www.patreon.com/gnumdk';
+      }
+
+      LinkButton paypal {
+        visible: false;
+        label: _('PayPal');
+        focusable: true;
+        receives-default: true;
+        uri: 'https://www.paypal.me/lollypopgnome';
+      }
+    }
+  }
+}

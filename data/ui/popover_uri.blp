@@ -1,0 +1,213 @@
+using Gtk 4.0;
+
+Image image1 {
+  visible: false;
+  icon-name: 'user-trash-symbolic';
+}
+
+Image image3 {
+  visible: false;
+  icon-name: 'bookmark-new-symbolic';
+}
+
+Grid widget {
+  visible: false;
+  margin-start: 2;
+  margin-end: 2;
+  margin-bottom: 2;
+
+  StackSwitcher {
+    visible: false;
+    halign: center;
+    margin-bottom: 2;
+    hexpand: true;
+    stack: stack;
+  }
+
+  Stack stack {
+    visible: false;
+    transition-type: crossfade;
+
+    Grid {
+      visible: false;
+      map => $_on_bookmarks_map();
+
+      ScrolledWindow scrolled_bookmarks {
+        visible: false;
+        focusable: true;
+        hexpand: true;
+        vexpand: true;
+        child: 
+        Viewport {
+          visible: false;
+          child: 
+          ListBox bookmarks_box {
+            visible: false;
+            selection-mode: multiple;
+            row-selected => $_on_row_selected();
+            selected-rows-changed => $_on_selected_rows_changed();
+          }
+
+          ;
+        }
+
+        ;
+      }
+
+      ScrolledWindow {
+        visible: false;
+        focusable: true;
+        hexpand: true;
+        vexpand: true;
+        child: 
+        Viewport {
+          visible: false;
+          child: 
+          ListBox tags_box {
+            visible: false;
+            row-selected => $_on_row_selected();
+          }
+
+          ;
+        }
+
+        ;
+
+        styles [
+          "sidebar",
+        ]
+      }
+
+      Grid {
+        visible: false;
+        margin-top: 2;
+        column-spacing: 5;
+
+        Button remove_button {
+          visible: false;
+          focusable: true;
+          receives-default: true;
+          halign: start;
+          margin-start: 2;
+          margin-end: 2;
+          margin-top: 2;
+          clicked => $_on_remove_button_clicked();
+
+          styles [
+            "red",
+            "overlay-button",
+          ]
+        }
+
+        Label count {
+          visible: false;
+          halign: end;
+          hexpand: true;
+
+          styles [
+            "dim-label",
+          ]
+        }
+
+        Button import_button {
+          visible: false;
+          focusable: true;
+          receives-default: true;
+          tooltip-text: _('Import bookmarks');
+          clicked => $_on_import_button_clicked();
+
+          styles [
+            "overlay-button",
+          ]
+        }
+      }
+    }
+
+    ScrolledWindow {
+      visible: false;
+      focusable: true;
+      hexpand: true;
+      vexpand: true;
+      child: 
+      Viewport {
+        visible: false;
+        child: 
+        ListBox search_box {
+          visible: false;
+          map => $_on_search_map();
+          row-selected => $_on_row_selected();
+        }
+
+        ;
+      }
+
+      ;
+    }
+
+    Grid {
+      visible: false;
+      row-spacing: 5;
+      column-spacing: 2;
+
+      ScrolledWindow {
+        visible: false;
+        focusable: true;
+        hexpand: true;
+        vexpand: true;
+        child: 
+        Viewport {
+          visible: false;
+          child: 
+          ListBox history_box {
+            visible: false;
+            selection-mode: multiple;
+            map => $_on_history_map();
+            row-selected => $_on_row_selected();
+          }
+
+          ;
+        }
+
+        ;
+      }
+
+      InfoBar infobar {
+        visible: false;
+        response => $_on_infobar_response();
+
+        [internal-child action_area]
+        $GtkButtonBox {
+        }
+
+        [internal-child content_area]
+        Box {
+          visible: false;
+          spacing: 16;
+        }
+      }
+
+      Grid {
+        visible: false;
+        row-spacing: 2;
+
+        Calendar calendar {
+          visible: false;
+          valign: start;
+          day-selected => $_on_day_selected();
+        }
+
+        Button {
+          visible: false;
+          label: _('Clear history');
+          focusable: true;
+          receives-default: true;
+          halign: center;
+          valign: start;
+          margin-start: 5;
+          margin-end: 5;
+          clicked => $_on_clear_history_clicked();
+        }
+      }
+    }
+  }
+}

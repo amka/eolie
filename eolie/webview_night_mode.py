@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import WebKit2, Gio, GLib
+from gi.repository import WebKit, Gio, GLib
 
 from time import time
 
@@ -38,7 +38,7 @@ class WebViewNightMode:
         self.__stylesheets.connect("populated",
                                    self.__on_stylesheets_populated)
         self.get_style_context().add_class("night-mode")
-        self.__default_stylesheet = WebKit2.UserStyleSheet(
+        self.__default_stylesheet = WebKit.UserStyleSheet(
                      "body, table, figure {\
                         color: #EAEAEA !important;\
                         background-color: #353535 !important\
@@ -57,8 +57,8 @@ class WebViewNightMode:
                         background-color: #353535 !important;\
                         border: 1px solid grey;\
                       }",
-                     WebKit2.UserContentInjectedFrames.ALL_FRAMES,
-                     WebKit2.UserStyleLevel.USER,
+                     WebKit.UserContentInjectedFrames.ALL_FRAMES,
+                     WebKit.UserStyleLevel.USER,
                      None,
                      None)
 
@@ -113,18 +113,18 @@ class WebViewNightMode:
         """
             Run JS helpers
             @param webview as WebView
-            @param event as WebKit2.LoadEvent
+            @param event as WebKit.LoadEvent
         """
         if not self.__should_apply_night_mode():
             self.get_user_content_manager().remove_all_style_sheets()
             return
-        if event == WebKit2.LoadEvent.STARTED:
+        if event == WebKit.LoadEvent.STARTED:
             self.__css_uri = None
             self.__started_time = int(time())
             self.__cancellable.cancel()
             self.__cancellable = Gio.Cancellable.new()
             self.__stylesheets.set_cancellable(self.__cancellable)
-        elif event == WebKit2.LoadEvent.REDIRECTED:
+        elif event == WebKit.LoadEvent.REDIRECTED:
             self.__css_uri = None
         elif webview.uri != self.__css_uri:
             self.run_javascript_from_gresource(
@@ -161,10 +161,10 @@ class WebViewNightMode:
         content_manager = self.get_user_content_manager()
         content_manager.remove_all_style_sheets()
         content_manager.add_style_sheet(self.__default_stylesheet)
-        user_style_sheet = WebKit2.UserStyleSheet(
+        user_style_sheet = WebKit.UserStyleSheet(
                  stylesheets.get_css_text(self.__started_time),
-                 WebKit2.UserContentInjectedFrames.ALL_FRAMES,
-                 WebKit2.UserStyleLevel.USER,
+                 WebKit.UserContentInjectedFrames.ALL_FRAMES,
+                 WebKit.UserStyleLevel.USER,
                  None,
                  None)
         content_manager.add_style_sheet(user_style_sheet)

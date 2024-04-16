@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, WebKit2
+from gi.repository import Gtk, WebKit
 
 
 class WebViewPopover(Gtk.Popover):
@@ -68,9 +68,9 @@ class WebViewPopover(Gtk.Popover):
             self.__label.hide()
             self.__combobox.show()
 
-#######################
-# PROTECTED           #
-#######################
+    #######################
+    # PROTECTED           #
+    #######################
     def _on_combobox_changed(self, combobox):
         """
             Update visible webview
@@ -82,9 +82,9 @@ class WebViewPopover(Gtk.Popover):
                 self.__stack.set_visible_child(child)
                 break
 
-#######################
-# PRIVATE             #
-#######################
+    #######################
+    # PRIVATE             #
+    #######################
     def __get_prev_child(self):
         """
             Get previous child
@@ -137,11 +137,11 @@ class WebViewPopover(Gtk.Popover):
         """
             Update spinner
             @param webview as WebView
-            @param event as WebKit2.LoadEvent
+            @param event as WebKit.LoadEvent
         """
-        if event == WebKit2.LoadEvent.STARTED:
+        if event == WebKit.LoadEvent.STARTED:
             self.__spinner.start()
-        elif event == event == WebKit2.LoadEvent.FINISHED:
+        elif event == event == WebKit.LoadEvent.FINISHED:
             self.__spinner.stop()
 
     def __on_webview_close(self, webview):

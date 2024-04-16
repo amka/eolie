@@ -1,0 +1,90 @@
+using Gtk 4.0;
+
+Image image2 {
+  visible: false;
+  icon-name: 'user-home-symbolic';
+}
+
+Image image3 {
+  visible: false;
+  tooltip-text: _('Leave fullscreen');
+  icon-name: 'view-restore-symbolic';
+}
+
+Image image5 {
+  visible: false;
+  icon-name: 'channel-secure-symbolic';
+}
+
+Box end {
+  visible: false;
+  halign: end;
+  valign: center;
+  spacing: 5;
+
+  Button fullscreen_button {
+    visible: false;
+    focusable: true;
+    receives-default: true;
+    tooltip-text: _('Leave fullscreen');
+    clicked => $_on_fullscreen_button_clicked();
+  }
+
+  Button tls_button {
+    visible: false;
+    focusable: true;
+    receives-default: true;
+    tooltip-text: _('Disallow access to this site');
+    clicked => $_on_tls_button_clicked();
+
+    styles [
+      "destructive-action",
+    ]
+  }
+
+  ToggleButton menu_button {
+    visible: false;
+    toggled => $_on_menu_button_toggled();
+
+    Image settings-button-image {
+      visible: false;
+      icon-name: 'view-more-symbolic';
+      icon-size: normal;
+    }
+
+    styles [
+      "image-button",
+    ]
+  }
+
+  Button home_button {
+    visible: false;
+    focusable: true;
+    receives-default: true;
+    tooltip-text: _('Startup page');
+    clicked => $_on_home_button_clicked();
+  }
+
+  ToggleButton download_button {
+    visible: false;
+    focusable: true;
+    receives-default: true;
+    tooltip-text: _('Downloads');
+    toggled => $_on_download_button_toggled();
+
+    Overlay overlay {
+      visible: false;
+      child: 
+      Image image1 {
+        visible: false;
+        icon-name: 'folder-download-symbolic';
+      }
+
+      ;
+    }
+
+    styles [
+      "download-button",
+    ]
+  }
+}

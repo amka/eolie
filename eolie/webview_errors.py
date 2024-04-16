@@ -64,8 +64,8 @@ class WebViewErrors:
     def __on_load_failed(self, view, event, uri, error):
         """
             Show error page
-            @param view as WebKit2.WebView
-            @param event as WebKit2.LoadEvent
+            @param view as WebKit.WebView
+            @param event as WebKit.LoadEvent
             @param uri as str
             @param error as GLib.Error
         """
@@ -114,7 +114,7 @@ class WebViewErrors:
     def __on_load_failed_tls(self, view, uri, certificate, errors):
         """
             Show TLS error page
-            @param view as WebKit2.WebView
+            @param view as WebKit.WebView
             @param certificate as Gio.TlsCertificate
             @parma errors as Gio.TlsCertificateFlags
         """
@@ -167,7 +167,7 @@ class WebViewErrors:
     def __on_web_process_crashed(self, webview):
         """
             We just crashed :-(
-            @param webview as WebKit2.WebView
+            @param webview as WebKit.WebView
         """
         self._loading_state = LoadingState.ERROR
         f = Gio.File.new_for_uri("resource:///org/gnome/Eolie/error.css")

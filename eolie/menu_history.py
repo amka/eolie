@@ -25,7 +25,7 @@ class HistoryMenu(Gio.Menu):
     def __init__(self, items, window):
         """
             Init menu
-            @param items as [WebKit2.BackForwardListItem]
+            @param items as [WebKit.BackForwardListItem]
         """
         Gio.Menu.__init__(self)
         self.__window = window
@@ -75,7 +75,7 @@ class HistoryMenu(Gio.Menu):
             Load history
             @param Gio.SimpleAction
             @param GVariant
-            @param item as WebKit2.BackForwardListItem
+            @param item as WebKit.BackForwardListItem
         """
         App().active_window.\
             container.webview.go_to_back_forward_list_item(item)

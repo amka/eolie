@@ -1,0 +1,77 @@
+using Gtk 4.0;
+
+Grid widget {
+  visible: false;
+  orientation: vertical;
+  row-spacing: 2;
+  column-spacing: 5;
+
+  Separator separator1 {
+    visible: false;
+    margin-bottom: 2;
+  }
+
+  ScrolledWindow scrolled {
+    visible: false;
+    focusable: true;
+    hexpand: true;
+    vexpand: true;
+    child: 
+    Viewport viewport {
+      visible: false;
+      valign: start;
+      child: 
+      FlowBox flowbox {
+        visible: false;
+        homogeneous: true;
+        min-children-per-line: 3;
+        max-children-per-line: 3;
+        selection-mode: multiple;
+      }
+
+      ;
+    }
+
+    ;
+  }
+
+  SearchEntry entry {
+    visible: false;
+    focusable: true;
+    halign: end;
+    margin-end: 5;
+    margin-top: 2;
+    search-changed => $_on_search_changed();
+  }
+
+  Button button {
+    visible: false;
+    label: _('Save images');
+    focusable: true;
+    receives-default: true;
+    halign: start;
+    margin-start: 2;
+    margin-top: 2;
+    clicked => $_on_button_clicked();
+
+    styles [
+      "suggested-action",
+    ]
+  }
+
+  Spinner spinner {
+    visible: false;
+    halign: start;
+    margin-end: 2;
+    hexpand: true;
+  }
+
+  CheckButton {
+    visible: false;
+    label: _('Show links');
+    focusable: true;
+    halign: end;
+    hexpand: true;
+    toggled => $_on_button_toggled();
+  }
+}

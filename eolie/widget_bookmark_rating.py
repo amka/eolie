@@ -10,12 +10,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk
+from gi.repository import Gtk, Adw
 
 from eolie.define import App
 
 
-class BookmarkRatingWidget(Gtk.Bin):
+class BookmarkRatingWidget(Adw.Bin):
     """
         Rate widget
     """
@@ -25,7 +25,7 @@ class BookmarkRatingWidget(Gtk.Bin):
             Init widget
             @param bookmark_id as int
         """
-        Gtk.Bin.__init__(self)
+        super().__init__()
         self.__bookmark_id = bookmark_id
         builder = Gtk.Builder()
         builder.add_from_resource("/org/gnome/Eolie/BookmarkRatingWidget.ui")

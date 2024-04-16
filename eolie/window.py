@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GLib, Gio, Gdk, Handy
+from gi.repository import Gtk, GLib, Gio, Gdk, Adw
 
 from eolie.define import App, LoadingType
 from eolie.toolbar import Toolbar
@@ -21,7 +21,7 @@ from eolie.logger import Logger
 from eolie.window_state import WindowState
 
 
-class Window(Handy.ApplicationWindow, WindowState):
+class Window(Adw.ApplicationWindow, WindowState):
     """
         Main window
     """
@@ -33,7 +33,7 @@ class Window(Handy.ApplicationWindow, WindowState):
             @param size as (int, int)
             @param is_maximized as bool
         """
-        Handy.ApplicationWindow.__init__(self,
+        Adw.ApplicationWindow.__init__(self,
                                          application=App(),
                                          title="Eolie",
                                          icon_name="org.gnome.Eolie")

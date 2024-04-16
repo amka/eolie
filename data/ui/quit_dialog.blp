@@ -1,0 +1,44 @@
+using Gtk 4.0;
+
+Dialog dialog {
+  [internal-child vbox]
+  Box {
+    orientation: vertical;
+    spacing: 2;
+
+    [internal-child action_area]
+    $GtkButtonBox {
+      layout-style: 'end';
+
+      Button cancel {
+        label: _('Cancel');
+        visible: true;
+        can-focus: true;
+        receives-default: true;
+        margin-end: 5;
+      }
+
+      Button close {
+        label: _('Close');
+        visible: true;
+        can-focus: true;
+        receives-default: true;
+        margin-end: 5;
+
+        styles [
+          "destructive-action",
+        ]
+      }
+    }
+
+    Label label {
+      visible: true;
+      margin-start: 20;
+      margin-end: 20;
+      margin-top: 20;
+      margin-bottom: 20;
+      hexpand: true;
+      vexpand: true;
+    }
+  }
+}

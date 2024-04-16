@@ -1,0 +1,41 @@
+using Gtk 4.0;
+
+Grid widget {
+  visible: true;
+
+  Box {
+    visible: true;
+    spacing: 5;
+
+    ComboBoxText combobox {
+      halign: center;
+      valign: center;
+      margin-top: 2;
+      hexpand: true;
+      changed => $_on_combobox_changed();
+    }
+
+    Label label {
+      halign: center;
+      valign: center;
+      hexpand: true;
+      ellipsize: end;
+    }
+
+    Spinner spinner {
+      visible: true;
+      halign: center;
+    }
+  }
+
+  ScrolledWindow {
+    Viewport {
+      visible: true;
+
+      Stack stack {
+        visible: true;
+        transition-type: crossfade;
+      }
+    }
+  }
+}

@@ -1,0 +1,176 @@
+using Gtk 4.0;
+
+ShortcutsWindow shortcuts {
+  modal: true;
+
+  ShortcutsSection {
+    section-name: 'shortcuts';
+    max-height: 10;
+
+    ShortcutsGroup {
+      title: C_('shortcut window', 'General');
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'New window');
+        accelerator: '<Primary>n';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Settings');
+        accelerator: '<Primary>comma';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Fullscreen');
+        accelerator: 'F11';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Quit');
+        accelerator: '<Primary>q';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Enter location');
+        accelerator: '<Primary>l';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Show bookmarks');
+        accelerator: '<Primary>b';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Show history');
+        accelerator: '<Primary>h';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Search');
+        accelerator: '<Primary>k';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Show sidebar');
+        accelerator: 'F9';
+      }
+    }
+
+    ShortcutsGroup {
+      title: C_('shortcut window', 'Pages');
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'New page');
+        accelerator: '<Primary>t';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Last closed page');
+        accelerator: '<Primary><Shift>t';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'New private page');
+        accelerator: '<Primary><Shift>p';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Close page');
+        accelerator: '<Primary>w';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Previous page');
+        accelerator: '<Primary>Page_Up';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Next page');
+        accelerator: '<Primary>Page_Down';
+      }
+
+      ShortcutsShortcut view_all {
+        title: C_('shortcut window', 'View all pages');
+        accelerator: '<Alt>e';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Show source code');
+        accelerator: '<Primary><Shift>c';
+      }
+    }
+
+    ShortcutsGroup {
+      title: C_('shortcut window', 'Web page');
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Save page');
+        accelerator: '<Primary><Shift>s';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Print page');
+        accelerator: '<Primary>p';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Zoom in');
+        accelerator: '<Primary>plus';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Zoom out');
+        accelerator: '<Primary>minus';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Default zoom level');
+        accelerator: '<Primary>0';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Search for');
+        accelerator: '<Primary>f';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Disable adblock for current site');
+        accelerator: '<Primary>e';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Enable JavaScript for current site temporarily');
+        accelerator: '<Primary>j';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Enable "Media Source Extension" temporarily');
+        accelerator: '<Primary>m';
+      }
+    }
+
+    ShortcutsGroup {
+      title: C_('shortcut window', 'Navigation');
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Previous page');
+        accelerator: '<Alt>Left';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Next page');
+        accelerator: '<Alt>Right';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Reload page');
+        accelerator: '<Primary>r';
+      }
+
+      ShortcutsShortcut {
+        title: C_('shortcut window', 'Startup page');
+        accelerator: '<Primary>Home';
+      }
+    }
+  }
+}

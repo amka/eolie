@@ -1,0 +1,136 @@
+using Gtk 4.0;
+
+Grid scripts {
+  column-spacing: 10;
+  map => $_on_map(listbox);
+
+  $GtkModelButton {
+    visible: '1';
+    can-focus: '1';
+    receives-default: '1';
+    hexpand: '1';
+    text: _('Block JavaScript');
+    menu-name: 'main';
+    inverted: '1';
+    centered: '1';
+
+    layout {
+      column: '0';
+      row: '0';
+      column-span: '2';
+    }
+  }
+
+  ScrolledWindow {
+    height-request: 300;
+    focusable: true;
+    child: 
+    Viewport {
+      child:       ListBox listbox {
+        selection-mode: none;
+        row-activated => $_on_row_activated();
+
+        styles [
+          "menu-listbox",
+        ]
+      }
+
+      ;
+    }
+
+    ;
+
+    layout {
+      column: '0';
+      row: '1';
+      column-span: '2';
+    }
+  }
+
+  Switch switch {
+    focusable: true;
+    tooltip-text: _('Enable JavaScript blocker');
+    halign: start;
+    margin-start: 2;
+    margin-end: 2;
+    margin-top: 2;
+    margin-bottom: 2;
+    state-set => $_on_state_set(listbox);
+
+    layout {
+      column: '1';
+      row: '2';
+    }
+  }
+
+  Image {
+    tooltip-text: _('Enable JavaScript blocker');
+    halign: end;
+    icon-name: 'security-high-symbolic';
+
+    layout {
+      column: '0';
+      row: '2';
+    }
+  }
+}
+
+Grid separator {
+  sensitive: false;
+  column-spacing: 4;
+
+  Separator {
+    valign: center;
+    hexpand: true;
+
+    layout {
+      column: '0';
+      row: '0';
+    }
+  }
+
+  Label {
+    label: _('Block policy');
+
+    layout {
+      column: '1';
+      row: '0';
+    }
+  }
+
+  Separator {
+    valign: center;
+    hexpand: true;
+
+    layout {
+      column: '2';
+      row: '0';
+    }
+  }
+}
+
+Grid trust_websites {
+  Label {
+    halign: start;
+    hexpand: true;
+    label: _('Trust websites');
+
+    layout {
+      column: '0';
+      row: '0';
+      column-span: '2';
+    }
+  }
+
+  CheckButton trust_check_button {
+    focusable: true;
+    halign: end;
+    hexpand: true;
+    toggled => $_on_trust_website_toggled();
+
+    layout {
+      column: '2';
+      row: '0';
+    }
+  }
+}

@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GLib, GtkSpell
+from gi.repository import Gtk, GLib, Adw
 
 from eolie.helper_gestures import GesturesHelper
 from eolie.define import App
@@ -28,7 +28,7 @@ class LanguageRow(Gtk.ListBoxRow, GesturesHelper):
             @param name as str
             @param code as str
         """
-        Gtk.EventBox.__init__(self)
+        super().__init__(self)
         self.__uri = uri
         self.__code = code
         grid = Gtk.Grid()
@@ -89,7 +89,7 @@ class LanguageRow(Gtk.ListBoxRow, GesturesHelper):
             self.__uri)
 
 
-class LanguagesMenu(Gtk.Bin):
+class LanguagesMenu(Adw.Bin):
     """
         Widget showing languages and allowing user to enable/disable
         spell check
@@ -100,7 +100,7 @@ class LanguagesMenu(Gtk.Bin):
             Init widget
             @param uri as str
         """
-        Gtk.Bin.__init__(self)
+        super().__init__()
         self.__uri = uri
         builder = Gtk.Builder()
         builder.add_from_resource("/org/gnome/Eolie/LanguagesMenu.ui")

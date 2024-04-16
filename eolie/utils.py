@@ -213,7 +213,7 @@ def update_popover_internals(widget):
 def get_snapshot(webview, result, callback, *args):
     """
         Set snapshot on main image
-        @param webview as WebKit2.WebView
+        @param webview as WebKit.WebView
         @param result as Gio.AsyncResult
         @return cairo.Surface
     """

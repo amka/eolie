@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, Gdk, WebKit2
+from gi.repository import Gtk, Gdk, WebKit
 
 from time import time
 from uuid import uuid4
@@ -143,9 +143,9 @@ class WebViewCredentials:
         """
             Run JS helper
             @param webview as WebView
-            @param event as WebKit2.LoadEvent
+            @param event as WebKit.LoadEvent
         """
-        if event == WebKit2.LoadEvent.FINISHED:
+        if event == WebKit.LoadEvent.FINISHED:
             self.run_javascript_from_gresource(
                 "/org/gnome/Eolie/javascript/Submit.js", None, None)
 

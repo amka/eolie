@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GObject, Pango, GLib
+from gi.repository import Gtk, GObject, Pango, GLib, Adw
 
 from eolie.helper_passwords import PasswordsHelper
 from eolie.define import App, MARGIN_SMALL
@@ -56,7 +56,7 @@ class Row(Gtk.ListBoxRow):
         return self.__host
 
 
-class NotificationsDialog(Gtk.Bin):
+class NotificationsDialog(Adw.Bin):
     """
         Show notifications authorizations
     """
@@ -69,7 +69,7 @@ class NotificationsDialog(Gtk.Bin):
         """
             Init dialog
         """
-        Gtk.Bin.__init__(self)
+        super().__init__()
         self.__filter = ""
         self.__helper = PasswordsHelper()
         builder = Gtk.Builder()

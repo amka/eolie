@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, GLib, Gio, WebKit2, Gdk
+from gi.repository import Gtk, GLib, Gio, WebKit, Gdk
 
 from time import time
 from gettext import gettext as _
@@ -27,7 +27,7 @@ class DownloadRow(Gtk.ListBoxRow):
     def __init__(self, download, finished):
         """
             Init row
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
             @param finished as bool
         """
         Gtk.ListBoxRow.__init__(self)
@@ -75,7 +75,7 @@ class DownloadRow(Gtk.ListBoxRow):
     def download(self):
         """
             Get row download
-            @return WebKit2.Download
+            @return WebKit.Download
         """
         return self.__download
 
@@ -94,7 +94,7 @@ class DownloadRow(Gtk.ListBoxRow):
             webview = self.__download.get_web_view()
             App().download_manager.remove(self.__download)
             if webview is None:
-                WebKit2.WebContext.get_default().download_uri(self.__uri)
+                WebKit.WebContext.get_default().download_uri(self.__uri)
             else:
                 webview.download_uri(self.__uri)
             self.destroy()
@@ -219,7 +219,7 @@ class DownloadRow(Gtk.ListBoxRow):
 
     def __on_received_data(self, download, length):
         """
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
             @param length as int
         """
         try:
@@ -258,7 +258,7 @@ class DownloadRow(Gtk.ListBoxRow):
 
     def __on_finished(self, download):
         """
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
         """
         self.__sublabel.set_label("")
         self.set_tooltip_text(self.__label.get_text())
@@ -274,7 +274,7 @@ class DownloadRow(Gtk.ListBoxRow):
 
     def __on_failed(self, download, error):
         """
-            @param download as WebKit2.Download
+            @param download as WebKit.Download
             @param error as GLib.Error
         """
         self.__button_image.set_from_icon_name("view-refresh-symbolic",

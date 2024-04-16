@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gio, WebKit2
+from gi.repository import Gio, WebKit
 
 from urllib.parse import urlparse
 
@@ -69,9 +69,9 @@ class WebViewHelpers:
         """
             Run JS helpers
             @param webview as WebView
-            @param event as WebKit2.LoadEvent
+            @param event as WebKit.LoadEvent
         """
-        if event == WebKit2.LoadEvent.FINISHED:
+        if event == WebKit.LoadEvent.FINISHED:
             user_script = App().settings.get_value(
                 "user-script-uri").get_string()
             f = Gio.File.new_for_uri(user_script)

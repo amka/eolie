@@ -11,13 +11,12 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import gi
-gi.require_version('Gtk', '3.0')
-gi.require_version('WebKit2', '4.0')
-gi.require_version('Soup', '2.4')
+gi.require_version('Gtk', '4.0')
+gi.require_version('WebKit', '6.0')
+gi.require_version('Soup', '3.0')
 gi.require_version('Secret', '1')
-gi.require_version('GtkSpell', '3.0')
-gi.require_version("Handy", "1")
-from gi.repository import Gtk, Gio, GLib, Gdk, WebKit2, Handy
+gi.require_version('Adw', '1')
+from gi.repository import Gtk, Gio, GLib, Gdk, WebKit, Adw
 
 from threading import current_thread
 from gettext import gettext as _
@@ -28,7 +27,6 @@ from getpass import getuser
 from signal import signal, SIGINT, SIGTERM
 import gc
 
-from eolie.application_night import NightApplication
 from eolie.settings import Settings
 from eolie.window import Window
 from eolie.art import Art
@@ -53,7 +51,7 @@ from eolie.logger import Logger
 from eolie.webview_state import WebViewState
 
 
-class Application(Gtk.Application, NightApplication):
+class Application(Gtk.Application):
     """
         Eolie application
     """
@@ -78,9 +76,9 @@ class Application(Gtk.Application, NightApplication):
         # We force it to current python 3.6 name, to be sure in case of
         # change in python
         current_thread().setName("MainThread")
-        # First check WebKit2 version
-        if WebKit2.MINOR_VERSION < 20:
-            exit("You need WebKit2GTK >= 2.20")
+        # First check WebKit version
+        if WebKit.MINOR_VERSION < 20:
+            exit("You need WebKitGTK >= 2.20")
         Gtk.Application.__init__(
             self,
             application_id=app_id,
@@ -219,7 +217,7 @@ class Application(Gtk.Application, NightApplication):
     def content_filters(self):
         """
             Get content filters
-            @return [WebKit2.UserContentFilter]
+            @return [WebKit.UserContentFilter]
         """
         filters = []
         for content_blocker in self.__content_blockers:
@@ -285,7 +283,7 @@ class Application(Gtk.Application, NightApplication):
         """
             Init main application
         """
-        Handy.init()
+        Adw.init()
         self.settings = Settings.new()
         NightApplication.__init__(self)
 
@@ -331,7 +329,7 @@ class Application(Gtk.Application, NightApplication):
         self.art = Art()
 
         # Get a default user agent for search
-        settings = WebKit2.Settings.new()
+        settings = WebKit.Settings.new()
         self.search = Search(settings.get_user_agent())
 
         self.task_helper = TaskHelper()
@@ -484,7 +482,7 @@ class Application(Gtk.Application, NightApplication):
                         loading_type = wanted_loading_type(
                             len(window.container.webviews))
                         window.container.add_webview(webview, loading_type)
-                        session = WebKit2.WebViewSessionState(
+                        session = WebKit.WebViewSessionState(
                             GLib.Bytes.new(webview_state.session))
                         webview.restore_session_state(session)
                     window.connect("delete-event", self.__on_delete_event)
@@ -572,7 +570,7 @@ class Application(Gtk.Application, NightApplication):
             active_window.container.add_webview_for_uri(self.start_page,
                                                         loading_type)
         if self.settings.get_value("debug"):
-            WebKit2.WebContext.get_default().get_plugins(None,
+            WebKit.WebContext.get_default().get_plugins(None,
                                                          self.__on_get_plugins,
                                                          None)
         Gdk.notify_startup_complete()
@@ -727,7 +725,7 @@ class Application(Gtk.Application, NightApplication):
         """
             Add filter to content manager
             @param content_blocker as ContentBlocker
-            @param content_filter as WebKit2.UserContentFilter
+            @param content_filter as WebKit.UserContentFilter
         """
         for window in self.windows:
             for webview in window.container.webviews:
@@ -739,7 +737,7 @@ class Application(Gtk.Application, NightApplication):
         """
             Remove filter from content manager
             @param content_blocker as ContentBlocker
-            @param content_filter as WebKit2.UserContentFilter
+            @param content_filter as WebKit.UserContentFilter
         """
         for window in self.windows:
             for webview in window.container.webviews:

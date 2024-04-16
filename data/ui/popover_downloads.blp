@@ -1,0 +1,74 @@
+using Gtk 4.0;
+
+Image image1 {
+  visible: true;
+  icon-name: 'edit-clear-all-symbolic';
+}
+
+Image image2 {
+  visible: true;
+  icon-name: 'inode-directory-symbolic';
+}
+
+Grid widget {
+  visible: true;
+
+  ScrolledWindow scrolled {
+    visible: true;
+    can-focus: true;
+    hexpand: true;
+    vexpand: true;
+    hscrollbar-policy: never;
+
+    Viewport {
+      visible: true;
+
+      ListBox downloads_box {
+        visible: true;
+        selection-mode: none;
+
+        styles [
+          "transparent",
+        ]
+      }
+    }
+  }
+
+  Button {
+    visible: true;
+    can-focus: true;
+    receives-default: true;
+    tooltip-text: _('Open download folder');
+    margin-start: 2;
+    margin-end: 2;
+    margin-top: 2;
+    margin-bottom: 2;
+    clicked => $_on_open_clicked();
+  }
+
+  Button clear_button {
+    visible: true;
+    can-focus: true;
+    receives-default: true;
+    tooltip-text: _('Clear finished downloads');
+    halign: end;
+    margin-start: 2;
+    margin-end: 2;
+    margin-top: 2;
+    margin-bottom: 2;
+    clicked => $_on_clear_clicked();
+  }
+
+  Separator {
+    visible: true;
+  }
+}
+
+Label placeholder {
+  visible: true;
+  label: _('No active download');
+
+  styles [
+    "dim-label",
+  ]
+}

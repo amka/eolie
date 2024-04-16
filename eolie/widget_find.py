@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, Gdk, Gio, GLib, WebKit2
+from gi.repository import Gtk, Gdk, Gio, GLib, WebKit
 
 from gettext import gettext as _
 
@@ -94,7 +94,7 @@ class FindWidget(Gtk.SearchBar):
     def __on_counted_matches(self, find_controller, count):
         """
             Update count label
-            @param find_controller as WebKit2.FindController
+            @param find_controller as WebKit.FindController
             @param count as str
         """
         self.__count = count
@@ -176,11 +176,11 @@ class FindWidget(Gtk.SearchBar):
         # FIXME Can't understand what is max count :/
         self.__find_controller.count_matches(
             text,
-            WebKit2.FindOptions.CASE_INSENSITIVE,
+            WebKit.FindOptions.CASE_INSENSITIVE,
             100)
         self.__find_controller.search(
             text,
-            WebKit2.FindOptions.CASE_INSENSITIVE,
+            WebKit.FindOptions.CASE_INSENSITIVE,
             100)
 
     def __on_get_selection(self, source, result):

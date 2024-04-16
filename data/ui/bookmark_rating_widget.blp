@@ -1,0 +1,108 @@
+using Gtk 4.0;
+
+Grid widget {
+  visible: false;
+  halign: center;
+
+  $GtkEventBox eventbox1 {
+    button-press-event => $_on_button_press();
+    enter-notify-event => $_on_enter_notify();
+    leave-notify-event => $_on_leave_notify();
+
+    Image heart0 {
+      visible: false;
+      opacity: 0.20000000000000001;
+      icon-name: 'emote-love-symbolic';
+    }
+
+    layout {
+      column: '1';
+      row: '0';
+    }
+  }
+
+  $GtkEventBox eventbox2 {
+    button-press-event => $_on_button_press();
+    enter-notify-event => $_on_enter_notify();
+    leave-notify-event => $_on_leave_notify();
+
+    Image heart4 {
+      visible: false;
+      opacity: 0.20000000000000001;
+      icon-name: 'emote-love-symbolic';
+    }
+
+    layout {
+      column: '5';
+      row: '0';
+    }
+  }
+
+  $GtkEventBox eventbox3 {
+    button-press-event => $_on_button_press();
+    enter-notify-event => $_on_enter_notify();
+    leave-notify-event => $_on_leave_notify();
+
+    Image heart3 {
+      visible: false;
+      opacity: 0.20000000000000001;
+      icon-name: 'emote-love-symbolic';
+    }
+
+    layout {
+      column: '4';
+      row: '0';
+    }
+  }
+
+  $GtkEventBox eventbox4 {
+    button-press-event => $_on_button_press();
+    enter-notify-event => $_on_enter_notify();
+    leave-notify-event => $_on_leave_notify();
+
+    Image heart2 {
+      visible: false;
+      opacity: 0.20000000000000001;
+      icon-name: 'emote-love-symbolic';
+    }
+
+    layout {
+      column: '3';
+      row: '0';
+    }
+  }
+
+  $GtkEventBox eventbox5 {
+    button-press-event => $_on_button_press();
+    enter-notify-event => $_on_enter_notify();
+    leave-notify-event => $_on_leave_notify();
+
+    Image heart1 {
+      visible: false;
+      opacity: 0.20000000000000001;
+      icon-name: 'emote-love-symbolic';
+    }
+
+    layout {
+      column: '2';
+      row: '0';
+    }
+  }
+
+  $GtkEventBox eventbox6 {
+    button-press-event => $_on_button_press();
+    enter-notify-event => $_on_enter_notify();
+    leave-notify-event => $_on_leave_notify();
+
+    Image empty_heart1 {
+      visible: false;
+      opacity: 0;
+      icon-name: 'emote-love-symbolic';
+    }
+
+    layout {
+      column: '0';
+      row: '0';
+    }
+  }
+}

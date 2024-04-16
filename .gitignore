@@ -86,11 +86,13 @@ data/Makefile.in
 flatpak/metadata
 *.pyc
 *.valid
-/src/Makefile.in
 /data/AboutDialog.ui
 /data/org.gnome.Eolie.appdata.xml
 /flatpak/app
 /flatpak/repo
 /flatpak/*.bundle
 /flatpak/*.flatpak
-/flatpak/.flatpak-builder
+
+.flatpak-builder
+.idea
+/subprojects/blueprint-compiler

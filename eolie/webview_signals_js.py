@@ -48,7 +48,7 @@ class WebViewJsSignals:
         """
             Show message to user
             @param webview as WebView
-            @param dialog as WebKit2.ScriptDialog
+            @param dialog as WebKit.ScriptDialog
         """
         if self.__js_blocker_timeout_id is not None:
             GLib.source_remove(self.__js_blocker_timeout_id)

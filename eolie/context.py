@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import GLib, Gio, Gtk, WebKit2
+from gi.repository import GLib, Gio, Gtk, WebKit
 
 from urllib.parse import urlparse
 from gettext import gettext as _
@@ -28,12 +28,12 @@ class Context:
     def __init__(self, context):
         """
             Init context
-            @param context as WebKit2.WebContext
+            @param context as WebKit.WebContext
         """
         self.__context = context
         self.__task_helper = TaskHelper()
         if not context.is_ephemeral():
-            context.set_cache_model(WebKit2.CacheModel.WEB_BROWSER)
+            context.set_cache_model(WebKit.CacheModel.WEB_BROWSER)
             context.set_favicon_database_directory(App().favicons_path)
             cookie_manager = context.get_cookie_manager()
             cookie_manager.set_accept_policy(
@@ -41,9 +41,9 @@ class Context:
             path = COOKIES_PATH % (EOLIE_DATA_PATH, "default")
             cookie_manager.set_persistent_storage(
                 path,
-                WebKit2.CookiePersistentStorage.SQLITE)
+                WebKit.CookiePersistentStorage.SQLITE)
         context.set_process_model(
-            WebKit2.ProcessModel.MULTIPLE_SECONDARY_PROCESSES)
+            WebKit.ProcessModel.MULTIPLE_SECONDARY_PROCESSES)
         context.set_spell_checking_enabled(
             App().settings.get_value("enable-spell-check"))
         context.register_uri_scheme("populars", self.__on_populars_scheme)
@@ -56,7 +56,7 @@ class Context:
             origins = []
             for value in values:
                 (scheme, netloc) = value.split(";")
-                origins.append(WebKit2.SecurityOrigin(scheme, netloc, 0))
+                origins.append(WebKit.SecurityOrigin(scheme, netloc, 0))
             context.initialize_notification_permissions(origins, [])
         except Exception as e:
             Logger.error("Context::__init__(): %s", e)
@@ -69,7 +69,7 @@ class Context:
     def __on_populars_scheme(self, request):
         """
             Show populars web pages
-            @param request as WebKit2.URISchemeRequest
+            @param request as WebKit.URISchemeRequest
         """
         uri = request.get_uri()
         parsed = urlparse(uri)
@@ -146,9 +146,9 @@ class Context:
     def __on_internal_scheme(self, request):
         """
             Load an internal resource
-            @param request as WebKit2.URISchemeRequest
+            @param request as WebKit.URISchemeRequest
         """
-        # We use internal:// because resource:// is already used by WebKit2
+        # We use internal:// because resource:// is already used by WebKit
         icon_name = request.get_uri().replace("internal://", "")
         icon_info = Gtk.IconTheme.get_default().lookup_icon(
             icon_name, 22,
@@ -166,7 +166,7 @@ class Context:
     def __on_accept_scheme(self, request):
         """
             Accept certificate for uri
-            @param request as WebKit2.URISchemeRequest
+            @param request as WebKit.URISchemeRequest
         """
         view = request.get_web_view()
         if view.bad_tls is None:
@@ -185,7 +185,7 @@ class Context:
     def __on_download_started(self, context, download):
         """
             A new download started, handle signals
-            @param context as WebKit2.WebContext
-            @param download as WebKit2.Download
+            @param context as WebKit.WebContext
+            @param download as WebKit.Download
         """
         App().download_manager.add(download)

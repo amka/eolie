@@ -1,0 +1,576 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adjustment adjustment1 {
+  lower: 5;
+  upper: 30;
+  step-increment: 1;
+  page-increment: 10;
+}
+
+Adjustment adjustment2 {
+  lower: 1;
+  upper: 200;
+  step-increment: 5;
+  page-increment: 10;
+}
+
+Adjustment adjustment3 {
+  lower: 5;
+  upper: 30;
+  step-increment: 1;
+  page-increment: 10;
+}
+
+Image image1 {
+  visible: false;
+  icon-name: 'emblem-system-symbolic';
+}
+
+Image image3 {
+  visible: false;
+  icon-name: 'emblem-system-symbolic';
+}
+
+Image image4 {
+  visible: false;
+  icon-name: 'emblem-system-symbolic';
+}
+
+Image image5 {
+  visible: false;
+  icon-name: 'emblem-system-symbolic';
+}
+
+Image image6 {
+  visible: false;
+  icon-name: 'mail-send-receive-symbolic';
+}
+
+Image image7 {
+  visible: false;
+  icon-name: 'emblem-system-symbolic';
+}
+
+Adw.PreferencesWindow settings_dialog {
+  destroy => $_on_dialog_destroy();
+
+  Adw.PreferencesPage {
+    title: _('General');
+
+    Adw.PreferencesGroup {
+      title: _('Appearance');
+
+      Adw.ActionRow {
+        title: _('Auto switch to night mode');
+        subtitle: _('Follow system settings');
+
+        Switch night-mode_boolean {
+          visible: false;
+          name: 'night-mode';
+          focusable: true;
+          valign: center;
+          state-set => $_on_boolean_state_set();
+        }
+      }
+
+      Adw.ExpanderRow {
+        title: _('Fonts');
+
+        Adw.ActionRow {
+          title: _('Use system fonts');
+
+          Switch use-system-fonts_boolean {
+            visible: false;
+            name: 'use-system-fonts';
+            focusable: true;
+            valign: center;
+            state-set => $_on_boolean_state_set();
+          }
+        }
+
+        Adw.ActionRow sans-serif_row {
+          title: _('Sans-serif font');
+
+          FontButton font-sans-serif_button {
+            visible: false;
+            name: 'font-sans-serif';
+            focusable: true;
+            receives-default: true;
+            halign: end;
+            valign: center;
+            hexpand: true;
+            font: 'Sans 12';
+            font-set => $_on_font_sans_serif_set();
+          }
+        }
+
+        Adw.ActionRow serif_row {
+          title: _('Serif font');
+
+          FontButton font-serif_button {
+            visible: false;
+            name: 'font-serif';
+            focusable: true;
+            receives-default: true;
+            halign: end;
+            valign: center;
+            hexpand: true;
+            font: 'Sans 12';
+          }
+        }
+
+        Adw.ActionRow monospace_row {
+          title: _('Monospaced font');
+
+          FontButton font-monospace_button {
+            visible: false;
+            name: 'font-monospace';
+            focusable: true;
+            receives-default: true;
+            halign: end;
+            valign: center;
+            hexpand: true;
+            font: 'Sans 12';
+          }
+        }
+
+        Adw.ActionRow {
+          title: _('Minimum font size');
+
+          SpinButton min-font-size_range {
+            visible: false;
+            name: 'min-font-size';
+            focusable: true;
+            valign: center;
+            adjustment: adjustment1;
+            value-changed => $_on_range_changed();
+          }
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _('Startup');
+
+      Adw.ActionRow {
+        title: _('Restore session');
+        subtitle: _('Show previously opened pages on startup\n                                ');
+
+        Switch remember-session_boolean {
+          visible: false;
+          name: 'remember-session';
+          focusable: true;
+          valign: center;
+          state-set => $_on_boolean_state_set();
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Start page');
+
+        Grid {
+          visible: false;
+          margin-top: 5;
+          margin-bottom: 5;
+          row-spacing: 5;
+          column-spacing: 5;
+
+          DropDown start-page_combo {
+            visible: false;
+            name: 'start-page';
+            model: 
+            StringList {
+            }
+
+            ;
+
+            layout {
+              column: '0';
+              row: '0';
+            }
+          }
+
+          Entry start-page-custom_entry {
+            visible: false;
+            name: 'start-page-custom';
+            focusable: true;
+            placeholder-text: 'https://gitlab.gnome.org/World/eolie\n                                                ';
+            changed => $_on_entry_changed();
+
+            layout {
+              column: '0';
+              row: '1';
+            }
+          }
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Shown bookmarks');
+        subtitle: _('How many bookmarks on startup page');
+
+        SpinButton max-popular-items_range {
+          visible: false;
+          name: 'max-popular-items';
+          focusable: true;
+          valign: center;
+          adjustment: adjustment3;
+          value: 5;
+          value-changed => $_on_range_changed();
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _('Downloads');
+
+      Adw.ActionRow {
+        title: _('Folder');
+
+        $GtkFileChooserButton download_chooser {
+          title: _('Select download folder');
+          selection-changed => $_on_download_selection_changed();
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Automatically open downloaded files');
+
+        Switch open-downloads_boolean {
+          visible: false;
+          name: 'open-downloads';
+          focusable: true;
+          valign: center;
+          state-set => $_on_boolean_state_set();
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _('Search');
+
+      Adw.ActionRow {
+        title: _('Search engines');
+
+        Button search_engines_button {
+          visible: false;
+          name: 'open-downloads';
+          focusable: true;
+          valign: center;
+          clicked => $_on_configure_engines_clicked();
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Suggestions');
+        subtitle: _('Show suggestions from search engines\n                                ');
+
+        Switch enable-suggestions_boolean {
+          visible: false;
+          name: 'enable-suggestions';
+          focusable: true;
+          valign: center;
+          state-set => $_on_boolean_state_set();
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _('Others');
+
+      Adw.ActionRow {
+        title: _('Default zoom level');
+        subtitle: _('Zoom level for current screen');
+
+        SpinButton default_zoom_level {
+          visible: false;
+          name: 'default-zoom-level';
+          focusable: true;
+          valign: center;
+          width-chars: 5;
+          adjustment: adjustment2;
+          value: 30;
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Enable plugins');
+
+        Switch enable-plugins_boolean {
+          visible: false;
+          name: 'enable-plugins';
+          focusable: true;
+          valign: center;
+          state-set => $_on_boolean_state_set();
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Enable developer tools');
+
+        Switch developer-extras_boolean {
+          visible: false;
+          name: 'developer-extras';
+          focusable: true;
+          valign: center;
+          state-set => $_on_boolean_state_set();
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Notifications');
+        subtitle: _('Sites allowed to notify you');
+
+        Button notifications_button {
+          visible: false;
+          name: 'open-downloads';
+          focusable: true;
+          valign: center;
+          clicked => $_on_configure_notifications_clicked();
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('JavaScript');
+        subtitle: _('Custom script');
+
+        $GtkFileChooserButton user_script_chooser {
+          title: _('Select download folder');
+          selection-changed => $_on_user_script_selection_changed();
+        }
+      }
+    }
+  }
+
+  Adw.PreferencesPage {
+    title: _('Privacy');
+
+    Adw.PreferencesGroup {
+      title: _('Tracking');
+
+      Adw.ActionRow {
+        title: _('Tell websites I do not want to be tracked\n                                ');
+
+        Switch do-not-track_boolean {
+          visible: false;
+          name: 'do-not-track';
+          focusable: true;
+          valign: center;
+          state-set => $_on_boolean_state_set();
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Autoplay videos');
+
+        Switch autoplay-videos_boolean {
+          visible: false;
+          name: 'autoplay-videos';
+          focusable: true;
+          valign: center;
+          state-set => $_on_boolean_state_set();
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Accept cookies');
+
+        Grid {
+          visible: false;
+          valign: center;
+          row-spacing: 5;
+          column-spacing: 5;
+
+          DropDown cookie-storage_combo {
+            visible: false;
+            name: 'cookie-storage';
+            model: 
+            StringList {
+            }
+
+            ;
+
+            layout {
+              column: '0';
+              row: '0';
+            }
+          }
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _('Data');
+
+      Adw.ActionRow {
+        title: _('Remember passwords');
+        subtitle: _('Autocomplete credentials');
+
+        Grid {
+          visible: false;
+          valign: center;
+          row-spacing: 5;
+          column-spacing: 5;
+
+          Button open-downloads_button3 {
+            visible: false;
+            name: 'open-downloads';
+            focusable: true;
+            valign: center;
+            clicked => $_on_manage_passwords_clicked();
+
+            layout {
+              column: '1';
+              row: '0';
+            }
+          }
+
+          Switch remember-passwords_boolean {
+            visible: false;
+            name: 'remember-passwords';
+            focusable: true;
+            valign: center;
+
+            layout {
+              column: '0';
+              row: '0';
+            }
+          }
+        }
+      }
+
+      Adw.ActionRow {
+        title: _('Navigation data');
+        subtitle: _('How much time we keep it?');
+
+        Grid {
+          visible: false;
+          valign: center;
+          row-spacing: 5;
+          column-spacing: 5;
+
+          DropDown history-storage_combo {
+            visible: false;
+            name: 'history-storage';
+            halign: end;
+            valign: center;
+            model: 
+            StringList {
+            }
+
+            ;
+
+            layout {
+              column: '0';
+              row: '0';
+            }
+          }
+
+          Button open-downloads_button4 {
+            visible: false;
+            name: 'open-downloads';
+            focusable: true;
+            valign: center;
+            clicked => $_on_clear_personnal_data_clicked();
+
+            layout {
+              column: '1';
+              row: '0';
+            }
+          }
+        }
+      }
+    }
+  }
+
+  Adw.PreferencesPage {
+    title: _('Firefox sync');
+
+    Adw.PreferencesGroup {
+      Adw.ActionRow {
+        title: _('Enable synchronization');
+        subtitle: _('This will sync your history and passwords\n                                ');
+
+        Switch enable-firefox-sync_boolean {
+          visible: false;
+          name: 'enable-firefox-sync';
+          focusable: true;
+          valign: center;
+          state-set => $_on_boolean_state_set();
+        }
+      }
+
+      Adw.ActionRow status_row {
+        title: _('Status');
+      }
+
+      Adw.ActionRow sync_row {
+        title: _('Sync now');
+
+        Button send-to_button {
+          visible: false;
+          name: 'open-downloads';
+          focusable: true;
+          valign: center;
+          clicked => $_on_sync_now_clicked();
+        }
+      }
+
+      Adw.ExpanderRow configure_row {
+        title: _('Configure');
+
+        Adw.ActionRow username_row {
+          title: _('Username');
+
+          Entry username_entry {
+            visible: false;
+            focusable: true;
+            valign: center;
+            changed => $_on_credentials_changed();
+          }
+        }
+
+        Adw.ActionRow password_row {
+          title: _('Password');
+
+          Entry password_entry {
+            visible: false;
+            focusable: true;
+            valign: center;
+            visibility: false;
+            input-purpose: password;
+            changed => $_on_credentials_changed();
+          }
+        }
+
+        Adw.ActionRow code_row {
+          title: _('Code');
+          subtitle: _('Two factor auth');
+
+          Entry code_entry {
+            visible: false;
+            focusable: true;
+            valign: center;
+            changed => $_on_credentials_changed();
+          }
+        }
+
+        Adw.ActionRow {
+          Button sync_button {
+            visible: false;
+            label: _('Start syncing');
+            focusable: true;
+            receives-default: true;
+            valign: start;
+            clicked => $_on_sync_button_clicked();
+
+            styles [
+              "suggested-action",
+            ]
+          }
+        }
+      }
+    }
+  }
+}

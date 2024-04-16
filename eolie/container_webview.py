@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import GLib, WebKit2
+from gi.repository import GLib, WebKit
 
 from urllib.parse import urlparse
 
@@ -140,9 +140,9 @@ class WebViewContainer:
     def __on_back_forward_list_changed(self, bf_list, added, removed):
         """
             Update actions
-            @param bf_list as WebKit2.BackForwardList
-            @param added as WebKit2.BackForwardListItem
-            @param removed as WebKit2.BackForwardListItem
+            @param bf_list as WebKit.BackForwardList
+            @param added as WebKit.BackForwardListItem
+            @param removed as WebKit.BackForwardListItem
             @param webview as WebView
         """
         if self.__current_webview is not None:
@@ -160,18 +160,18 @@ class WebViewContainer:
         """
             Update UI based on current event
             @param webview as WebView
-            @param event as WebKit2.LoadEvent
+            @param event as WebKit.LoadEvent
         """
         parsed = urlparse(webview.uri)
         wanted_scheme = parsed.scheme in ["http", "https", "file"]
-        if event == WebKit2.LoadEvent.STARTED:
+        if event == WebKit.LoadEvent.STARTED:
             self._window.toolbar.title.entry.icons.set_loading(True)
             self._window.toolbar.title.entry.icons.show_geolocation(False)
             self._window.toolbar.title.entry.icons.show_readable_button(False)
-        elif event == WebKit2.LoadEvent.COMMITTED:
+        elif event == WebKit.LoadEvent.COMMITTED:
             if not wanted_scheme:
                 GLib.idle_add(self._window.toolbar.title.start_search)
-        elif event == WebKit2.LoadEvent.FINISHED:
+        elif event == WebKit.LoadEvent.FINISHED:
             self._window.toolbar.title.entry.icons.set_loading(False)
             self._window.toolbar.title.entry.progress.set_fraction(1.0)
             if wanted_scheme:
@@ -195,7 +195,7 @@ class WebViewContainer:
     def __on_insecure_content_detected(self, webview, event):
         """
             @param webview as WebView
-            @param event as WebKit2.InsecureContentEvent
+            @param event as WebKit.InsecureContentEvent
         """
         self._window.toolbar.title.entry.set_insecure_content()
 
@@ -203,7 +203,7 @@ class WebViewContainer:
         """
             Show uri label
             @param webview as WebView
-            @param hit as WebKit2.HitTestResult
+            @param hit as WebKit.HitTestResult
             @param modifiers as Gdk.ModifierType
         """
         if hit.context_is_link():

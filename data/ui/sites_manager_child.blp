@@ -1,0 +1,52 @@
+using Gtk 4.0;
+
+$GtkEventBox widget {
+  button-press-event => $_on_button_press_event();
+
+  Grid grid {
+    visible: false;
+    margin-start: 3;
+    margin-end: 3;
+    margin-top: 5;
+    margin-bottom: 5;
+    column-spacing: 5;
+
+    Image image {
+      visible: false;
+      width-request: 24;
+      height-request: 24;
+      halign: center;
+      icon-name: 'applications-internet';
+
+      styles [
+        "sidebar-item-image",
+      ]
+
+      layout {
+        column: '0';
+        row: '0';
+      }
+    }
+
+    Label netloc_label {
+      visible: false;
+      ellipsize: end;
+      max-width-chars: 15;
+      xalign: 0;
+
+      styles [
+        "text-x-small",
+      ]
+
+      layout {
+        column: '0';
+        row: '1';
+        column-span: '2';
+      }
+    }
+  }
+
+  styles [
+    "site-manager-child",
+  ]
+}

@@ -1,0 +1,137 @@
+using Gtk 4.0;
+using Adw 1;
+
+Image image1 {
+  visible: false;
+  icon-name: 'go-previous-symbolic';
+}
+
+Grid widget {
+  visible: false;
+
+  Box {
+    visible: false;
+    vexpand: true;
+    orientation: vertical;
+    spacing: 12;
+
+    Box {
+      visible: false;
+      vexpand: true;
+      orientation: vertical;
+      spacing: 6;
+
+      Box {
+        visible: false;
+        spacing: 12;
+      }
+
+      ScrolledWindow {
+        visible: false;
+        focusable: true;
+        vexpand: true;
+        child: 
+        Viewport {
+          visible: false;
+          child: 
+          ListBox listbox {
+            visible: false;
+            selection-mode: multiple;
+            activate-on-single-click: false;
+            row-selected => $_on_row_selected();
+          }
+
+          ;
+        }
+
+        ;
+      }
+    }
+
+    Label {
+      visible: false;
+      halign: start;
+      label: _('You cannot undo this action. The data you are choosing to clear will be removed forever.');
+      wrap: true;
+      max-width-chars: 50;
+    }
+
+    layout {
+      column: '0';
+      row: '2';
+    }
+  }
+
+  Adw.HeaderBar {
+    Button {
+      visible: false;
+      focusable: true;
+      receives-default: true;
+      clicked => $_on_back_clicked();
+    }
+
+    ToggleButton search_button {
+      visible: false;
+      focusable: true;
+      valign: center;
+      toggled => $_on_search_toggled();
+
+      Image {
+        visible: false;
+        icon-name: 'edit-find-symbolic';
+        icon-size: normal;
+      }
+
+      styles [
+        "image-button",
+      ]
+    }
+
+    layout {
+      column: '0';
+      row: '0';
+    }
+  }
+
+  Button remove_button {
+    visible: false;
+    label: _('Remove');
+    sensitive: false;
+    focusable: true;
+    halign: end;
+    valign: center;
+    margin-end: 5;
+    margin-top: 5;
+    margin-bottom: 5;
+    use-underline: true;
+    clicked => $_on_remove_clicked();
+
+    styles [
+      "destructive-action",
+      "text-button",
+    ]
+
+    layout {
+      column: '0';
+      row: '3';
+    }
+  }
+
+  SearchBar search_bar {
+    visible: false;
+    child: 
+    SearchEntry search_entry {
+      visible: false;
+      width-request: 300;
+      focusable: true;
+      search-changed => $_on_search_changed();
+    }
+
+    ;
+
+    layout {
+      column: '0';
+      row: '1';
+    }
+  }
+}

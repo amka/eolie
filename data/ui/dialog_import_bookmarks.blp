@@ -1,0 +1,57 @@
+using Gtk 4.0;
+using Adw 1;
+
+Dialog dialog {
+  modal: true;
+  response => $_on_dialog_response();
+
+  [internal-child content_area]
+  Box {
+    visible: false;
+
+    Box {
+      visible: false;
+      orientation: vertical;
+      spacing: 12;
+
+      Label {
+        visible: false;
+        label: _('Import bookmarks from:');
+        wrap: true;
+        max-width-chars: 50;
+
+        styles [
+          "dim-label",
+        ]
+      }
+
+      ListBox listbox {
+        visible: false;
+      }
+    }
+  }
+
+  [internal-child action_area]
+  $GtkButtonBox {
+  }
+}
+
+Adw.HeaderBar headerbar {
+  [title-widget]
+  Label {
+    visible: false;
+    label: _('Import bookmarks');
+  }
+
+  Button import_button {
+    visible: false;
+    label: _('Import');
+    valign: center;
+    use-underline: true;
+
+    styles [
+      "text-button",
+      "suggested-action",
+    ]
+  }
+}

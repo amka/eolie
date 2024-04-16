@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import GLib, Gtk, Gio, WebKit2, Gdk
+from gi.repository import GLib, Gtk, Gio, WebKit, Gdk
 
 from gettext import gettext as _
 from urllib.parse import urlparse
@@ -59,7 +59,7 @@ class WebViewNavigation:
             uri = App().search.get_search_uri(uri)
         parsed = urlparse(uri)
         if uri == "about:blank":
-            WebKit2.WebView.load_plain_text(self, "")
+            WebKit.WebView.load_plain_text(self, "")
         # We are not a ftp browser, fall back to env
         elif parsed.scheme == "ftp":
             argv = [get_ftp_cmd(), uri, None]
@@ -83,7 +83,7 @@ class WebViewNavigation:
             self.stop_loading()
             self.set_uri(uri)
             self.__loaded_uri = self.uri
-            GLib.idle_add(WebKit2.WebView.load_uri, self, uri)
+            GLib.idle_add(WebKit.WebView.load_uri, self, uri)
 
     @property
     def loaded_uri(self):
@@ -113,17 +113,17 @@ class WebViewNavigation:
         """
             Update internals
             @param webview as WebView
-            @param event as WebKit2.LoadEvent
+            @param event as WebKit.LoadEvent
         """
         parsed = urlparse(webview.uri)
-        if event == WebKit2.LoadEvent.STARTED:
+        if event == WebKit.LoadEvent.STARTED:
             self._loading_state = LoadingState.LOADING
-        elif event == WebKit2.LoadEvent.COMMITTED:
+        elif event == WebKit.LoadEvent.COMMITTED:
             if parsed.scheme in ["http", "https"]:
                 emit_signal(self, "title-changed", webview.uri)
                 self.update_zoom_level()
                 self.update_sound_policy()
-        elif event == WebKit2.LoadEvent.FINISHED:
+        elif event == WebKit.LoadEvent.FINISHED:
             if self._loading_state not in [LoadingState.STOPPED,
                                            LoadingState.ERROR]:
                 self._loading_state = LoadingState.NONE
@@ -176,15 +176,15 @@ class WebViewNavigation:
     def __on_insecure_content_detected(self, webview, event):
         """
             @param webview as WebView
-            @param event as WebKit2.InsecureContentEvent
+            @param event as WebKit.InsecureContentEvent
         """
         self.__insecure_content_detected = True
 
     def __on_permission_request(self, webview, request):
         """
             Handle Webkit permissions
-            @param webview as WebKit2.WebView
-            @param request as WebKit2.PermissionRequest
+            @param webview as WebKit.WebView
+            @param request as WebKit.PermissionRequest
         """
         def on_allow_notifications(parsed):
             values = list(App().settings.get_value("notification-domains"))
@@ -193,13 +193,13 @@ class WebViewNavigation:
                                      GLib.Variant("as", values))
             request.allow()
 
-        if isinstance(request, WebKit2.GeolocationPermissionRequest):
+        if isinstance(request, WebKit.GeolocationPermissionRequest):
             if self.is_ephemeral:
                 request.deny()
             else:
                 uri = webview.uri
                 self.window.toolbar.title.show_geolocation(uri, request)
-        elif isinstance(request, WebKit2.NotificationPermissionRequest):
+        elif isinstance(request, WebKit.NotificationPermissionRequest):
             parsed = urlparse(webview.uri)
             from eolie.container_notification import ContainerNotification
             notification = ContainerNotification(
@@ -214,13 +214,13 @@ class WebViewNavigation:
     def __on_decide_policy(self, webview, decision, decision_type):
         """
             Navigation policy
-            @param webview as WebKit2.WebView
-            @param decision as WebKit2.NavigationPolicyDecision
-            @param decision_type as WebKit2.PolicyDecisionType
+            @param webview as WebKit.WebView
+            @param decision as WebKit.NavigationPolicyDecision
+            @param decision_type as WebKit.PolicyDecisionType
             @return bool
         """
         # Always accept response
-        if decision_type == WebKit2.PolicyDecisionType.RESPONSE:
+        if decision_type == WebKit.PolicyDecisionType.RESPONSE:
             response = decision.get_response()
             mime_type = response.props.mime_type
             uri = response.get_uri()
@@ -273,7 +273,7 @@ class WebViewNavigation:
                 self.reset_last_click_event()
                 decision.use()
                 return False
-            elif decision_type == WebKit2.PolicyDecisionType.NEW_WINDOW_ACTION:
+            elif decision_type == WebKit.PolicyDecisionType.NEW_WINDOW_ACTION:
                 decision.use()
                 return False
             else:
@@ -281,7 +281,7 @@ class WebViewNavigation:
                 return False
         elif mouse_button == 1:
             modifiers = navigation_action.get_modifiers()
-            if decision_type == WebKit2.PolicyDecisionType.NEW_WINDOW_ACTION:
+            if decision_type == WebKit.PolicyDecisionType.NEW_WINDOW_ACTION:
                 decision.use()
                 return False
             elif modifiers == Gdk.ModifierType.CONTROL_MASK:

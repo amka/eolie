@@ -10,7 +10,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-from gi.repository import Gtk, Gdk, Gio, WebKit2, GLib
+from gi.repository import Gtk, Gdk, Gio, WebKit, GLib
 
 from gettext import gettext as _
 from urllib.parse import urlparse
@@ -42,9 +42,9 @@ class WebViewMenuSignals:
         """
             Add custom items to menu
             @param webview as WebView
-            @param context_menu as WebKit2.ContextMenu
+            @param context_menu as WebKit.ContextMenu
             @param event as Gdk.Event
-            @param hit as WebKit2.HitTestResult
+            @param hit as WebKit.HitTestResult
         """
         parsed = urlparse(webview.uri)
         if parsed.scheme == "populars":
@@ -55,7 +55,7 @@ class WebViewMenuSignals:
                 action.connect("activate",
                                self.__on_reload_preview_activate,
                                hit.get_link_uri())
-                item = WebKit2.ContextMenuItem.new_from_gaction(
+                item = WebKit.ContextMenuItem.new_from_gaction(
                     action,
                     _("Reload preview"),
                     None)
@@ -64,19 +64,19 @@ class WebViewMenuSignals:
         position = 0
         for item in context_menu.get_items():
             action = item.get_stock_action()
-            if action in [WebKit2.ContextMenuAction.OPEN_LINK,
-                          WebKit2.ContextMenuAction.OPEN_VIDEO_IN_NEW_WINDOW,
-                          WebKit2.ContextMenuAction.OPEN_AUDIO_IN_NEW_WINDOW,
-                          WebKit2.ContextMenuAction.OPEN_FRAME_IN_NEW_WINDOW]:
+            if action in [WebKit.ContextMenuAction.OPEN_LINK,
+                          WebKit.ContextMenuAction.OPEN_VIDEO_IN_NEW_WINDOW,
+                          WebKit.ContextMenuAction.OPEN_AUDIO_IN_NEW_WINDOW,
+                          WebKit.ContextMenuAction.OPEN_FRAME_IN_NEW_WINDOW]:
                 context_menu.remove(item)
-            elif action == WebKit2.ContextMenuAction.OPEN_LINK_IN_NEW_WINDOW:
+            elif action == WebKit.ContextMenuAction.OPEN_LINK_IN_NEW_WINDOW:
                 context_menu.remove(item)
                 action = Gio.SimpleAction(name="open_new_page")
                 App().add_action(action)
                 action.connect("activate",
                                self.__on_open_new_page_activate,
                                hit.get_link_uri(), False)
-                item = WebKit2.ContextMenuItem.new_from_gaction(
+                item = WebKit.ContextMenuItem.new_from_gaction(
                     action,
                     _("Open link in a new page"),
                     None)
@@ -86,7 +86,7 @@ class WebViewMenuSignals:
                 action.connect("activate",
                                self.__on_open_new_page_activate,
                                hit.get_link_uri(), True)
-                item = WebKit2.ContextMenuItem.new_from_gaction(
+                item = WebKit.ContextMenuItem.new_from_gaction(
                     action,
                     _("Open link in a new private page"),
                     None)
@@ -96,12 +96,12 @@ class WebViewMenuSignals:
                 action.connect("activate",
                                self.__on_open_new_window_activate,
                                hit.get_link_uri())
-                item = WebKit2.ContextMenuItem.new_from_gaction(
+                item = WebKit.ContextMenuItem.new_from_gaction(
                     action,
                     _("Open link in a new window"),
                     None)
                 context_menu.append(item)
-                item = WebKit2.ContextMenuItem.new_separator()
+                item = WebKit.ContextMenuItem.new_separator()
                 context_menu.insert(item, position + 2)
 
         # Get current selection
@@ -115,20 +115,20 @@ class WebViewMenuSignals:
             action.connect("activate",
                            self.__on_search_words_activate,
                            selection)
-            item = WebKit2.ContextMenuItem.new_from_gaction(
+            item = WebKit.ContextMenuItem.new_from_gaction(
                 action,
                 _("Search on the Web"),
                 None)
             context_menu.append(item)
         if not hit.context_is_link() and parsed.scheme in ["http", "https"]:
-            item = WebKit2.ContextMenuItem.new_separator()
+            item = WebKit.ContextMenuItem.new_separator()
             context_menu.append(item)
             # Save page as image
             action = Gio.SimpleAction(name="save_as_image")
             App().add_action(action)
             action.connect("activate",
                            self.__on_save_as_image_activate)
-            item = WebKit2.ContextMenuItem.new_from_gaction(
+            item = WebKit.ContextMenuItem.new_from_gaction(
                 action,
                 _("Save page as image"),
                 None)
@@ -184,8 +184,8 @@ class WebViewMenuSignals:
             @param action as Gio.SimpleAction
             @param variant as GLib.Variant
         """
-        self.get_snapshot(WebKit2.SnapshotRegion.FULL_DOCUMENT,
-                          WebKit2.SnapshotOptions.NONE,
+        self.get_snapshot(WebKit.SnapshotRegion.FULL_DOCUMENT,
+                          WebKit.SnapshotOptions.NONE,
                           None,
                           self.__on_snapshot,
                           True)
@@ -198,7 +198,7 @@ class WebViewMenuSignals:
             @param uri as str
         """
         try:
-            webview = WebKit2.WebView.new()
+            webview = WebKit.WebView.new()
             webview.show()
             window = Gtk.OffscreenWindow.new()
             window.set_size_request(self.get_allocated_width(),
@@ -215,14 +215,14 @@ class WebViewMenuSignals:
         """
             Get a snapshot
             @param webview as WebView
-            @param event as WebKit2.LoadEvent
+            @param event as WebKit.LoadEvent
             @param uri as str
         """
-        if event == WebKit2.LoadEvent.FINISHED:
+        if event == WebKit.LoadEvent.FINISHED:
             GLib.timeout_add(3000,
                              webview.get_snapshot,
-                             WebKit2.SnapshotRegion.FULL_DOCUMENT,
-                             WebKit2.SnapshotOptions.NONE,
+                             WebKit.SnapshotRegion.FULL_DOCUMENT,
+                             WebKit.SnapshotOptions.NONE,
                              None,
                              get_snapshot,
                              self.__on_preview_snapshot,
@@ -233,16 +233,16 @@ class WebViewMenuSignals:
         """
             Cache snapshot
             @param surface as cairo.Surface
-            @param webview as WebKit2.WebView
+            @param webview as WebKit.WebView
             @param uri as str
             @param first_pass as bool
         """
         # The 32767 limit on the width/height dimensions
         # of an image surface is new in cairo 1.10,
-        # try with WebKit2.SnapshotRegion.VISIBLE
+        # try with WebKit.SnapshotRegion.VISIBLE
         if surface is None and first_pass:
-            webview.get_snapshot(WebKit2.SnapshotRegion.VISIBLE,
-                                 WebKit2.SnapshotOptions.NONE,
+            webview.get_snapshot(WebKit.SnapshotRegion.VISIBLE,
+                                 WebKit.SnapshotOptions.NONE,
                                  None,
                                  get_snapshot,
                                  self.__on_preview_snapshot,
@@ -276,10 +276,10 @@ class WebViewMenuSignals:
             Logger.error("WebView::__on_snapshot(): %s", e)
             # The 32767 limit on the width/height dimensions
             # of an image surface is new in cairo 1.10,
-            # try with WebKit2.SnapshotRegion.VISIBLE
+            # try with WebKit.SnapshotRegion.VISIBLE
             if first_pass:
-                self.get_snapshot(WebKit2.SnapshotRegion.VISIBLE,
-                                  WebKit2.SnapshotOptions.NONE,
+                self.get_snapshot(WebKit.SnapshotRegion.VISIBLE,
+                                  WebKit.SnapshotOptions.NONE,
                                   None,
                                   self.__on_snapshot,
                                   False)
